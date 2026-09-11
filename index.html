@@ -1,67 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aivengers AI</title>
 
   <style>
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #050509;
-      color: #ffffff;
+      color: #fff;
     }
 
-    a { color: inherit; text-decoration: none; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
     header {
       position: sticky;
       top: 0;
       z-index: 10;
-      background: rgba(5,5,9,0.85);
+      padding: 16px 7%;
+      background: rgba(5, 5, 9, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.08);
-      padding: 18px 7%;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 24px;
+      font-weight: 900;
       letter-spacing: 1px;
     }
 
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
     nav a {
-      margin-left: 16px;
-      color: #cccccc;
       font-size: 14px;
+      color: #ccc;
+    }
+
+    .whatsapp-small,
+    .btn-main {
+      background: linear-gradient(135deg, #008cff, #ff2b2b);
+      color: #fff;
+      font-weight: bold;
     }
 
     .whatsapp-small {
-      padding: 10px 14px;
-      background: linear-gradient(135deg, #008cff, #ff2b2b);
+      padding: 10px 15px;
       border-radius: 30px;
-      color: white;
-      font-weight: bold;
     }
 
     .hero {
       min-height: 90vh;
-      padding: 120px 7% 80px;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0,140,255,0.35), transparent 35%),
-        radial-gradient(circle at 80% 30%, rgba(255,40,40,0.30), transparent 35%),
-        #050509;
+      padding: 110px 7% 80px;
       display: flex;
       align-items: center;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(0,140,255,0.35), transparent 35%),
+        radial-gradient(circle at 85% 30%, rgba(255,40,40,0.3), transparent 35%),
+        #050509;
     }
 
-    .hero-content { max-width: 900px; }
+    .hero-content {
+      max-width: 900px;
+    }
 
     .tag {
       color: #00aaff;
@@ -72,7 +88,7 @@
     }
 
     h1 {
-      font-size: clamp(54px, 12vw, 130px);
+      font-size: clamp(52px, 12vw, 130px);
       line-height: 0.9;
       margin: 20px 0;
       letter-spacing: -4px;
@@ -80,15 +96,22 @@
 
     .subtitle {
       font-size: 22px;
-      color: #dddddd;
+      color: #ddd;
       margin-bottom: 18px;
+    }
+
+    .hero p,
+    .section-desc,
+    .card p,
+    .service p,
+    .why p {
+      color: #bbb;
+      line-height: 1.7;
     }
 
     .hero p {
       font-size: 18px;
-      color: #bbbbbb;
       max-width: 680px;
-      line-height: 1.7;
     }
 
     .buttons {
@@ -99,14 +122,11 @@
     }
 
     .btn {
+      display: inline-block;
       padding: 14px 22px;
       border-radius: 40px;
       font-weight: bold;
       border: 1px solid rgba(255,255,255,0.14);
-    }
-
-    .btn-main {
-      background: linear-gradient(135deg, #008cff, #ff2b2b);
     }
 
     .btn-dark {
@@ -119,24 +139,35 @@
 
     .section-title {
       font-size: 42px;
-      margin-bottom: 12px;
+      margin: 0 0 12px;
     }
 
     .section-desc {
-      color: #aaaaaa;
-      max-width: 700px;
-      line-height: 1.7;
+      max-width: 720px;
       margin-bottom: 35px;
     }
 
-    .work-grid {
+    .work-grid,
+    .services-grid,
+    .why-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 26px;
+      gap: 24px;
     }
 
-    .card {
-      background: #101018;
+    .work-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: start;
+    }
+
+    .services-grid,
+    .why-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .card,
+    .service,
+    .why {
+      background: linear-gradient(145deg, #101018, #08080d);
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 24px;
       overflow: hidden;
@@ -145,19 +176,24 @@
 
     .video-box {
       width: 100%;
-      aspect-ratio: 9 / 16;
       background: #000;
       overflow: hidden;
     }
 
-    .video-box iframe {
+    .vertical { aspect-ratio: 267 / 476; }
+    .wide { aspect-ratio: 560 / 314; }
+
+    iframe {
       width: 100%;
       height: 100%;
       border: 0;
+      display: block;
     }
 
-    .card-content {
-      padding: 22px;
+    .card-content,
+    .service,
+    .why {
+      padding: 24px;
     }
 
     .category {
@@ -168,55 +204,23 @@
       letter-spacing: 1.5px;
     }
 
-    .card h3 {
+    .card h3,
+    .service h3,
+    .why h3 {
       margin: 10px 0;
       font-size: 22px;
-    }
-
-    .card p {
-      color: #bdbdbd;
-      line-height: 1.6;
-      font-size: 15px;
     }
 
     .facebook-link {
       display: inline-block;
       margin-top: 12px;
-      color: #ffffff;
       font-weight: bold;
       border-bottom: 1px solid #ff2b2b;
     }
 
-    .services-grid,
-    .why-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .service,
-    .why {
-      padding: 28px;
-      border-radius: 22px;
-      background: linear-gradient(145deg, #101018, #08080d);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .service h3,
-    .why h3 {
-      margin-top: 0;
-      font-size: 21px;
-    }
-
-    .service p,
-    .why p {
-      color: #bdbdbd;
-      line-height: 1.6;
-    }
-
     .about {
       background:
-        radial-gradient(circle at 15% 40%, rgba(0,140,255,0.20), transparent 30%),
+        radial-gradient(circle at 15% 40%, rgba(0,140,255,0.2), transparent 30%),
         radial-gradient(circle at 85% 50%, rgba(255,40,40,0.18), transparent 30%),
         #08080d;
     }
@@ -224,9 +228,14 @@
     .contact-box {
       padding: 42px;
       border-radius: 28px;
+      text-align: center;
       background: linear-gradient(135deg, rgba(0,140,255,0.18), rgba(255,43,43,0.18));
       border: 1px solid rgba(255,255,255,0.12);
-      text-align: center;
+    }
+
+    .contact-box .section-desc {
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .socials {
@@ -241,21 +250,38 @@
       padding: 12px 18px;
       border-radius: 30px;
       background: rgba(255,255,255,0.08);
-      color: #dddddd;
+      color: #ddd;
     }
 
     footer {
       padding: 30px 7%;
       text-align: center;
-      color: #777777;
+      color: #777;
       border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     @media (max-width: 700px) {
-      nav a:not(.whatsapp-small) { display: none; }
-      header { padding: 15px 5%; }
-      section, .hero { padding-left: 5%; padding-right: 5%; }
-      .section-title { font-size: 34px; }
+      nav a:not(.whatsapp-small) {
+        display: none;
+      }
+
+      header {
+        padding: 14px 5%;
+      }
+
+      section,
+      .hero {
+        padding-left: 5%;
+        padding-right: 5%;
+      }
+
+      .section-title {
+        font-size: 34px;
+      }
+
+      h1 {
+        letter-spacing: -2px;
+      }
     }
   </style>
 </head>
@@ -273,14 +299,13 @@
     </nav>
   </header>
 
-  <section class="hero" id="home">
+  <section class="hero">
     <div class="hero-content">
       <div class="tag">Cinematic AI Studio</div>
       <h1>Aivengers AI</h1>
       <div class="subtitle">Cinematic AI & Real Video Production Studio</div>
-      <p>
-        We create cinematic AI videos and real video productions for brands, creators, and businesses.
-      </p>
+      <p>We create cinematic AI videos and real video productions for brands, creators, and businesses.</p>
+
       <div class="buttons">
         <a class="btn btn-main" href="#work">View Our Work</a>
         <a class="btn btn-dark" href="https://wa.me/201111750034?text=Hi%20Aivengers%20AI%2C%20I%20want%20to%20start%20a%20video%20project." target="_blank">Contact on WhatsApp</a>
@@ -290,81 +315,79 @@
 
   <section id="work">
     <h2 class="section-title">Featured Projects</h2>
-    <p class="section-desc">
-      A selection of cinematic AI commercials, food ads, action scenes, and animated character stories.
-    </p>
+    <p class="section-desc">A selection of cinematic AI commercials, food ads, action scenes, and animated character stories.</p>
 
     <div class="work-grid">
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1EvqysMbGJ%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box vertical">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1081454844385721%2F&show_text=false&width=267&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">AI Product Commercial</div>
           <h3>Cinematic Chocolate Product Ad</h3>
           <p>An AI / CGI product commercial designed to present chocolate in a premium, cinematic way.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/r/1EvqysMbGJ/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/1081454844385721/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1D7g1fjHn1%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box vertical">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2118001358852939%2F&show_text=false&width=267&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">AI Food Commercial</div>
           <h3>Dessert Shop Commercial</h3>
           <p>A cinematic AI video ad created for a dessert shop, designed to make the products look premium and mouth-watering.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/r/1D7g1fjHn1/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/2118001358852939/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1EqTYrfeeK%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box vertical">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1056300057368949%2F&show_text=false&width=267&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">AI Cinematic Commercial</div>
           <h3>Mini Runner Market Ad</h3>
           <p>A creative AI commercial featuring a tiny girl running through a market while escaping a giant fava beans can with dynamic parkour action.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/r/1EqTYrfeeK/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/1056300057368949/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F1Fm5BmUWwM%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box wide">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F27655261734151071%2F&show_text=false&width=560&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">AI Food Commercial</div>
           <h3>Premium Nuts Roastery Ad</h3>
           <p>A cinematic AI commercial for a nuts and roastery brand, designed to highlight freshness, flavor, and premium product quality.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/v/1Fm5BmUWwM/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/27655261734151071/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fv%2F14ovKdX1uWb%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box wide">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3674169399412917%2F&show_text=false&width=560&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">Cinematic Action Sequence</div>
           <h3>Action Scene Showcase</h3>
           <p>A cinematic action sequence showcasing dynamic movement, intense visuals, and dramatic AI-powered scene creation.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/v/14ovKdX1uWb/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/3674169399412917/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
       <div class="card">
-        <div class="video-box">
-          <iframe src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1DNtFJ2iLn%2F&show_text=false" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+        <div class="video-box vertical">
+          <iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1363147695804228%2F&show_text=false&width=267&t=0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
         </div>
         <div class="card-content">
           <div class="category">AI Cartoon Series</div>
           <h3>Animated Character Stories</h3>
           <p>A fun AI cartoon series featuring original characters in short stories, pranks, and entertaining situations.</p>
-          <a class="facebook-link" href="https://www.facebook.com/share/r/1DNtFJ2iLn/" target="_blank">View on Facebook</a>
+          <a class="facebook-link" href="https://www.facebook.com/reel/1363147695804228/" target="_blank">View on Facebook</a>
         </div>
       </div>
 
@@ -376,12 +399,35 @@
     <p class="section-desc">Creative video production services for businesses, brands, creators, restaurants, real estate, and social media projects.</p>
 
     <div class="services-grid">
-      <div class="service"><h3>AI Video Production</h3><p>Cinematic AI-generated videos for modern brands and digital campaigns.</p></div>
-      <div class="service"><h3>Real Video Production</h3><p>Real shooting and production for brands, businesses, and social media content.</p></div>
-      <div class="service"><h3>Product Commercials</h3><p>Premium product ads designed to grab attention and increase perceived value.</p></div>
-      <div class="service"><h3>Social Media Ads</h3><p>Short-form videos made for Facebook, Instagram, TikTok, and YouTube.</p></div>
-      <div class="service"><h3>Cinematic Editing</h3><p>Editing, pacing, music, sound, and cinematic storytelling for stronger impact.</p></div>
-      <div class="service"><h3>Creative Concepts</h3><p>Fresh ideas, scripts, and visual concepts tailored to each project.</p></div>
+      <div class="service">
+        <h3>AI Video Production</h3>
+        <p>Cinematic AI-generated videos for modern brands and digital campaigns.</p>
+      </div>
+
+      <div class="service">
+        <h3>Real Video Production</h3>
+        <p>Real shooting and production for brands, businesses, and social media content.</p>
+      </div>
+
+      <div class="service">
+        <h3>Product Commercials</h3>
+        <p>Premium product ads designed to grab attention and increase perceived value.</p>
+      </div>
+
+      <div class="service">
+        <h3>Social Media Ads</h3>
+        <p>Short-form videos made for Facebook, Instagram, TikTok, and YouTube.</p>
+      </div>
+
+      <div class="service">
+        <h3>Cinematic Editing</h3>
+        <p>Editing, pacing, music, sound, and cinematic storytelling for stronger impact.</p>
+      </div>
+
+      <div class="service">
+        <h3>Creative Concepts</h3>
+        <p>Fresh ideas, scripts, and visual concepts tailored to each project.</p>
+      </div>
     </div>
   </section>
 
@@ -394,18 +440,34 @@
 
   <section id="why">
     <h2 class="section-title">Why Choose Us</h2>
+
     <div class="why-grid">
-      <div class="why"><h3>Fast Delivery</h3><p>We create sharp, ready-to-use videos with a smooth production process.</p></div>
-      <div class="why"><h3>Creative Concepts</h3><p>Every video starts with a strong idea built for attention and impact.</p></div>
-      <div class="why"><h3>AI + Real Production</h3><p>We combine AI visuals with real production when the project needs it.</p></div>
-      <div class="why"><h3>Cinematic Quality</h3><p>Premium visuals, dramatic pacing, and a polished cinematic look.</p></div>
+      <div class="why">
+        <h3>Fast Delivery</h3>
+        <p>We create sharp, ready-to-use videos with a smooth production process.</p>
+      </div>
+
+      <div class="why">
+        <h3>Creative Concepts</h3>
+        <p>Every video starts with a strong idea built for attention and impact.</p>
+      </div>
+
+      <div class="why">
+        <h3>AI + Real Production</h3>
+        <p>We combine AI visuals with real production when the project needs it.</p>
+      </div>
+
+      <div class="why">
+        <h3>Cinematic Quality</h3>
+        <p>Premium visuals, dramatic pacing, and a polished cinematic look.</p>
+      </div>
     </div>
   </section>
 
   <section id="contact">
     <div class="contact-box">
       <h2 class="section-title">Start Your Project</h2>
-      <p class="section-desc" style="margin-left:auto;margin-right:auto;">
+      <p class="section-desc">
         Pricing depends on the project, duration, style, and production needs. Contact us on WhatsApp to get a custom quote.
       </p>
 
@@ -427,4 +489,4 @@
   </footer>
 
 </body>
-            </html>
+</html>
