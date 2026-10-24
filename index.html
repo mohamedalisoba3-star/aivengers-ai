@@ -87,12 +87,26 @@
     .project p { min-height: 52px; margin: 0; color: var(--muted); font-size: 14px; }
     .project-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; color: #d7dfff; font-size: 13px; font-weight: 700; }
     .project-link:hover { color: #8cc8ff; }
+    .project-client-badge { display: inline-flex; align-items: center; margin: 0 0 10px; padding: 5px 10px; border: 1px solid rgba(119,220,180,.28); border-radius: 999px; background: rgba(52,190,133,.1); color: #a8f0ce; font-size: 12px; font-weight: 750; }
     .services { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: linear-gradient(180deg,rgba(255,255,255,.018),transparent); }
     .services-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
     .service { min-height: 170px; padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.025); }
     .service-icon { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid rgba(145,191,255,.22); border-radius: 12px; background: rgba(91,149,255,.08); color: #9fcaff; font-size: 16px; }
     .service h3 { margin: 17px 0 7px; font-size: 17px; }
     .service p { margin: 0; color: var(--muted); font-size: 14px; }
+    .pricing { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: radial-gradient(ellipse at 85% 20%,rgba(92,111,255,.11),transparent 42%),#0c0f18; }
+    .pricing-panel { display: grid; grid-template-columns: 1fr .85fr; gap: 34px; padding: clamp(24px,5vw,46px); border: 1px solid rgba(164,178,255,.2); border-radius: 26px; background: rgba(255,255,255,.025); }
+    .pricing-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-content: start; }
+    .pricing-field { display: grid; gap: 8px; }
+    .pricing-field[hidden] { display: none; }
+    .pricing-field label { color: #c9d0e1; font-size: 13px; font-weight: 700; }
+    .pricing-field select { min-height: 50px; padding: 0 14px; border: 1px solid var(--line); border-radius: 13px; background: #111522; color: var(--text); font: inherit; }
+    .pricing-field select:focus-visible { outline: 3px solid rgba(81,168,255,.55); outline-offset: 2px; }
+    .pricing-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 12px; }
+    .price-result { display: flex; flex-direction: column; justify-content: center; padding: 26px; border: 1px solid rgba(145,191,255,.2); border-radius: 20px; background: linear-gradient(145deg,rgba(81,168,255,.11),rgba(154,118,255,.08)); }
+    .price-result-label { margin: 0; color: #b8c7e7; font-size: 13px; font-weight: 700; }
+    .price-amount { margin: 8px 0; font-size: clamp(35px,5vw,52px); line-height: 1.1; font-weight: 850; letter-spacing: -.04em; }
+    .price-summary { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
     .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 68px; }
     .about-panel { position: relative; overflow: hidden; min-height: 300px; display: flex; align-items: end; padding: 28px; border: 1px solid var(--line); border-radius: 28px; background: radial-gradient(ellipse at 24% 20%,rgba(72,157,255,.35),transparent 45%),radial-gradient(ellipse at 90% 85%,rgba(255,91,125,.22),transparent 40%),linear-gradient(145deg,#151a29,#0c0e16); }
     .about-panel::before { content: "AI"; position: absolute; top: -60px; right: 4px; color: rgba(255,255,255,.055); font-size: 260px; font-weight: 900; line-height: 1; letter-spacing: -.1em; }
@@ -135,6 +149,7 @@
     @media (max-width: 900px) {
       .work-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .services-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .pricing-panel { grid-template-columns: 1fr; }
       .about-grid { gap: 36px; }
       .why-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
     }
@@ -153,6 +168,8 @@
       .section-head { display: block; }
       .section-head .text-link { display: inline-block; margin-top: 18px; }
       .work-grid,.services-grid { grid-template-columns: 1fr; gap: 15px; }
+      .pricing-fields { grid-template-columns: 1fr; }
+      .pricing-note { grid-column: 1; }
       .project-info { padding: 19px; }
       .video-frame.vertical { aspect-ratio: 16 / 10; }
       .project p { min-height: 0; }
@@ -196,6 +213,7 @@
     <div class="wrap nav">
       <a class="brand" href="#top" aria-label="Aivengers AI home"><span class="brand-mark" aria-hidden="true">A</span><span>Aivengers <em>AI</em></span></a>
       <nav class="nav-links" aria-label="Main navigation">
+        <a href="#pricing" data-bilingual="Pricing|الأسعار">Pricing</a>
         <a href="#work" data-bilingual="Work|الأعمال">Work</a>
         <a href="#services" data-bilingual="Services|الخدمات">Services</a>
         <a href="#about" data-bilingual="About|من نحن">About</a>
@@ -235,7 +253,7 @@
           </article>
           <article class="project">
             <div class="video-frame vertical"><iframe title="Dessert shop commercial" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2118001358852939%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">AI food commercial</p><h3>Dessert Shop Commercial</h3><p>A cinematic ad designed to make every product look irresistible.</p><a class="project-link" href="https://www.facebook.com/reel/2118001358852939/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
+            <div class="project-info"><span class="project-client-badge" data-bilingual="One of our latest projects for Helwan El-Halmia Patisserie|من أحدث أعمالنا لحلواني الحلمية">من أحدث أعمالنا لحلواني الحلمية</span><p class="project-type">AI food commercial</p><h3>Dessert Shop Commercial</h3><p>A cinematic ad designed to make every product look irresistible.</p><a class="project-link" href="https://www.facebook.com/reel/2118001358852939/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
           </article>
           <article class="project">
             <div class="video-frame vertical"><iframe title="Mini Runner Market AI commercial" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1056300057368949%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
@@ -253,6 +271,22 @@
             <div class="video-frame vertical"><iframe title="Animated character stories" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1363147695804228%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
             <div class="project-info"><p class="project-type">AI cartoon series</p><h3>Animated Character Stories</h3><p>Original characters brought to life through short, entertaining stories.</p><a class="project-link" href="https://www.facebook.com/reel/1363147695804228/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+      <div class="wrap">
+        <div class="section-head"><div><p class="section-kicker" data-bilingual="Transparent pricing|أسعار واضحة">Transparent pricing</p><h2 data-bilingual="Build your video package.|اختار تفاصيل إعلانك.">Build your video package.</h2><p class="section-copy" data-bilingual="Choose the format, length, and voice-over to see an estimated price instantly.|اختار نوع الإعلان ومدته والتعليق الصوتي عشان تعرف السعر التقديري فورًا.">Choose the format, length, and voice-over to see an estimated price instantly.</p></div></div>
+        <div class="pricing-panel">
+          <div class="pricing-fields">
+            <div class="pricing-field"><label for="price-duration" data-bilingual="Video duration|مدة الفيديو">Video duration</label><select id="price-duration"><option value="15" data-bilingual="15 seconds|15 ثانية">15 seconds</option><option value="30" selected data-bilingual="30 seconds|30 ثانية">30 seconds</option><option value="60" data-bilingual="60 seconds|60 ثانية">60 seconds</option></select></div>
+            <div class="pricing-field"><label for="price-format" data-bilingual="Ad format|نوع الإعلان">Ad format</label><select id="price-format"><option value="tabletop" data-bilingual="Tabletop product ad|تصوير منتج Tabletop">Tabletop product ad</option><option value="location" data-bilingual="Place or venue ad|إعلان لمكان">Place or venue ad</option><option value="ugc" data-bilingual="UGC-style ad|إعلان بأسلوب UGC">UGC-style ad</option><option value="cartoon" data-bilingual="Cartoon video|فيديو كرتوني">Cartoon video</option></select></div>
+            <div class="pricing-field" id="quality-field"><label for="price-quality" data-bilingual="Production quality|جودة التنفيذ">Production quality</label><select id="price-quality"><option value="standard" data-bilingual="Standard quality|جودة قياسية">Standard quality</option><option value="lower" data-bilingual="Lower-cost quality|جودة أقل">Lower-cost quality</option></select></div>
+            <div class="pricing-field"><label for="price-voiceover" data-bilingual="Voice-over|تعليق صوتي">Voice-over</label><select id="price-voiceover"><option value="no" data-bilingual="No|لا">No</option><option value="yes" data-bilingual="Yes|نعم">Yes</option></select></div>
+            <p class="pricing-note" id="voiceover-note" data-bilingual="Voice-over is available for the first three formats; cartoon videos do not include voice-over.|التعليق الصوتي متاح لأول 3 أنواع، ولا يتوفر للفيديو الكرتوني.">Voice-over is available for the first three formats; cartoon videos do not include voice-over.</p>
+          </div>
+          <div class="price-result" aria-live="polite"><p class="price-result-label" data-bilingual="Estimated price|السعر التقديري">Estimated price</p><output id="price-amount" class="price-amount">EGP 1,200</output><p id="price-summary" class="price-summary">30 seconds · Tabletop product ad · No voice-over</p><a id="price-contact" class="button button-primary" href="https://wa.me/201111750034" target="_blank" rel="noopener noreferrer" data-bilingual="Ask about this package|اسأل عن الباقة دي">Ask about this package</a></div>
         </div>
       </div>
     </section>
@@ -336,6 +370,23 @@
         grid.querySelectorAll("[data-sheet-project='true']").forEach(card => card.remove());
         for (const item of visible) {
           const videoUrl = safeFacebookUrl(item.facebook_url);
+          const isClientProject = /^(yes|true|1)$/i.test(item.real_client) || Boolean(item.client_name);
+          const existing = [...grid.querySelectorAll(".project:not([data-sheet-project='true'])")]
+            .find(card => card.querySelector(".project-link")?.href === videoUrl);
+          if (existing) {
+            const info = existing.querySelector(".project-info");
+            info?.querySelector(".project-client-badge")?.remove();
+            if (isClientProject && info) {
+              const badge = document.createElement("span"); badge.className = "project-client-badge";
+              badge.textContent = lang === "ar" ? "مشروع منفّذ لعميل" : "Produced for a client";
+              if (item.client_name) badge.textContent += ": " + item.client_name;
+              badge.textContent = item.client_name
+                ? (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627 \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "One of our latest projects for " + item.client_name)
+                : (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627\u060c \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u0647 \u0644\u0639\u0645\u064a\u0644" : "One of our latest projects, completed and delivered for a client");
+              info.insertBefore(badge, info.firstChild);
+            }
+            continue;
+          }
           const card = document.createElement("article"); card.className = "project"; card.dataset.sheetProject = "true";
           const frame = document.createElement("div"); frame.className = "video-frame";
           if ((item.orientation || "").toLowerCase() === "vertical") frame.classList.add("vertical");
@@ -349,8 +400,17 @@
           const type = document.createElement("p"); type.className = "project-type"; type.textContent = item["category_" + lang] || item.category_en || "";
           const title = document.createElement("h3"); title.textContent = item["title_" + lang] || item.title_en;
           const desc = document.createElement("p"); desc.textContent = item["description_" + lang] || item.description_en || (lang === "ar" ? "شاهد هذا الفيديو من أعمالنا." : "Watch this video from our portfolio.");
+          if (isClientProject) { const badge = document.createElement("span"); badge.className = "project-client-badge"; badge.textContent = lang === "ar" ? "مشروع منفّذ لعميل" : "Produced for a client"; badge.textContent = item.client_name ? (lang === "ar" ? "\u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "Completed and delivered for " + item.client_name) : (lang === "ar" ? "\u0639\u0645\u0644 \u062d\u0642\u064a\u0642\u064a \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u064ه \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0639\u0645\u064a\u0644" : "Completed and delivered for a real client"); info.append(badge); }
+          const clientBadge = info.querySelector(".project-client-badge");
+          if (clientBadge) clientBadge.textContent = item.client_name
+            ? (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627 \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "One of our latest projects for " + item.client_name)
+            : (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627\u060c \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u0647 \u0644\u0639\u0645\u064a\u0644" : "One of our latest projects, completed and delivered for a client");
           info.append(type, title, desc);
           if (item.client_name) { const client = document.createElement("p"); client.className = "project-type"; client.textContent = (lang === "ar" ? "العميل: " : "Client: ") + item.client_name; info.append(client); }
+          if (clientBadge && item.client_name) {
+            const separateClientLine = [...info.querySelectorAll(".project-type")].find(node => node.textContent.endsWith(item.client_name));
+            separateClientLine?.remove();
+          }
           const link = document.createElement("a"); link.className = "project-link"; link.href = videoUrl; link.target = "_blank"; link.rel = "noopener noreferrer";
           link.textContent = lang === "ar" ? "شاهد العمل ↗" : "Watch project ↗";
           info.append(link); card.append(frame, info); grid.append(card);
@@ -363,6 +423,44 @@
           document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects(projects), 0));
           document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects(projects), 0)));
         }).catch(() => { /* Keep the existing project cards if the public sheet cannot be loaded. */ });
+
+      const durationSelect = document.getElementById("price-duration");
+      const formatSelect = document.getElementById("price-format");
+      const qualitySelect = document.getElementById("price-quality");
+      const qualityField = document.getElementById("quality-field");
+      const voiceSelect = document.getElementById("price-voiceover");
+      const priceOutput = document.getElementById("price-amount");
+      const priceSummary = document.getElementById("price-summary");
+      const priceContact = document.getElementById("price-contact");
+      function updatePrice() {
+        if (!durationSelect || !formatSelect || !qualitySelect || !voiceSelect || !priceOutput) return;
+        const language = document.documentElement.lang === "ar" ? "ar" : "en";
+        const duration = Number(durationSelect.value);
+        const isCartoon = formatSelect.value === "cartoon";
+        qualityField.hidden = isCartoon;
+        if (isCartoon) { voiceSelect.value = "no"; voiceSelect.disabled = true; }
+        else voiceSelect.disabled = false;
+        const factor = duration / 30;
+        const basePrice = isCartoon ? 500 : qualitySelect.value === "lower" ? 600 : 1200;
+        const voiceFee = !isCartoon && voiceSelect.value === "yes" ? 50 : 0;
+        const total = Math.round((basePrice + voiceFee) * factor);
+        const money = language === "ar" ? `${total.toLocaleString("en-EG")} جنيه` : `EGP ${total.toLocaleString("en-US")}`;
+        const formatName = formatSelect.selectedOptions[0].dataset.bilingual.split("|")[language === "ar" ? 1 : 0];
+        const qualityName = qualitySelect.selectedOptions[0].dataset.bilingual.split("|")[language === "ar" ? 1 : 0];
+        const voiceName = voiceSelect.value === "yes" ? (language === "ar" ? "مع تعليق صوتي" : "with voice-over") : (language === "ar" ? "من غير تعليق صوتي" : "no voice-over");
+        priceOutput.textContent = money;
+        priceSummary.textContent = language === "ar"
+          ? `${duration} ثانية · ${formatName}${isCartoon ? "" : " · " + qualityName} · ${voiceName}`
+          : `${duration} seconds · ${formatName}${isCartoon ? "" : " · " + qualityName} · ${voiceName}`;
+        const message = language === "ar"
+          ? `مرحبًا Aivengers AI، أريد عرض سعر لفيديو ${duration} ثانية، نوعه ${formatName}${isCartoon ? "" : "، " + qualityName}، ${voiceName}. السعر التقديري على الموقع: ${money}.`
+          : `Hi Aivengers AI, please quote a ${duration}-second ${formatName}${isCartoon ? "" : " at " + qualityName} ${voiceName} video. Website estimate: ${money}.`;
+        priceContact.href = `https://wa.me/201111750034?text=${encodeURIComponent(message)}`;
+      }
+      [durationSelect, formatSelect, qualitySelect, voiceSelect].forEach(control => control?.addEventListener("change", updatePrice));
+      document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(updatePrice, 0));
+      document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(updatePrice, 0)));
+      updatePrice();
     })();
   </script>
   <script>
