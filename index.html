@@ -499,7 +499,8 @@
       return {
         key: id ? "fb:" + id : "fb:" + u.origin + u.pathname,
         url: u.href,
-        embed: "https://www.facebook.com/plugins/video.php?show_text=false&autoplay=true&href=" + encodeURIComponent(u.href)
+        embed: "https://www.facebook.com/plugins/video.php?show_text=false&autoplay=true&href=" + encodeURIComponent(u.href),
+        preview: "https://www.facebook.com/plugins/video.php?show_text=false&href=" + encodeURIComponent(u.href)
       };
     }
 
@@ -569,6 +570,7 @@
       key: video.key,
       url: video.url,
       embed: video.embed,
+      preview: video.preview || "",
       thumb: parseThumb(fields.thumb) || video.thumb || "",
       vertical: fields.vertical != null ? fields.vertical : (video.vertical || false),
       hidden: false,
@@ -719,6 +721,19 @@
       iframe.referrerPolicy = "strict-origin-when-cross-origin";
       frame.replaceChildren(iframe);
     });
+
+    /* No cover image supplied: use Facebook's own player, which shows the video's cover.
+       loading="lazy" means it only loads when the visitor scrolls close to it. */
+    if (!p.thumb && p.preview) {
+      const preview = document.createElement("iframe");
+      preview.src = p.preview;
+      preview.title = heading.textContent;
+      preview.loading = "lazy";
+      preview.allowFullscreen = true;
+      preview.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+      preview.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.replaceChildren(preview);
+    }
 
     card.append(frame, info);
     return card;
