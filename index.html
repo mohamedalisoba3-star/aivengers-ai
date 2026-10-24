@@ -250,6 +250,7 @@
   
     /* ---- added in the fix pass ---- */
     button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .nav-links .menu-cta { display: none; }
     .video-facade { position: relative; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; color: #fff; overflow: hidden;
       background: radial-gradient(ellipse at 20% 15%,rgba(72,157,255,.34),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(255,91,125,.26),transparent 50%),linear-gradient(150deg,#161b2b,#0a0c14); }
     .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -271,7 +272,7 @@
       .nav-links { position: absolute; top: 100%; inset-inline: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 18px 18px; background: rgba(8,10,18,.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); font-size: 16px; }
       .nav-links.open { display: flex; }
       .nav-links a:not(.button) { padding: 15px 4px; border-bottom: 1px solid var(--line); }
-      .menu-cta { display: inline-flex; margin-top: 16px; }
+      .nav-links .menu-cta { display: inline-flex; margin-top: 16px; }
     }
     @media (max-width: 560px) {
       .nav-cta { display: none; }
@@ -460,6 +461,7 @@
   const LANG_KEY = "aivengers-site-language";
   const CACHE_KEY = "aivengers-portfolio-sheet-v1";
   const YES = /^(yes|true|1)$/i;
+  const NO = /^(no|false|0)$/i;
 
   /* =====================  HELPERS  ===================== */
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -575,6 +577,7 @@
       vertical: fields.vertical != null ? fields.vertical : (video.vertical || false),
       hidden: false,
       realClient: !!fields.realClient,
+      linkOnly: !!fields.linkOnly,
       client: fields.client || null,
       type: fields.type || pair("", ""),
       title: fields.title,
@@ -608,7 +611,7 @@
   }
 
   /* Sheet columns: visible, title_en, title_ar, category_en, category_ar, description_en, description_ar,
-     facebook_url (or video_url), orientation, client_name, real_client, thumbnail_url */
+     facebook_url (or video_url), orientation, client_name, real_client, thumbnail_url, embed ("no" = open on Facebook instead of playing here) */
   function mergeSheet(rows) {
     const list = DEFAULTS.map(p => Object.assign({}, p));
     rows.forEach((row, index) => {
@@ -630,6 +633,7 @@
         if (row.orientation) existing.vertical = row.orientation.toLowerCase() === "vertical";
         if (row.client_name) existing.client = pair(row.client_name, row.client_name);
         if (row.real_client) existing.realClient = YES.test(row.real_client);
+        if (row.embed) existing.linkOnly = NO.test(row.embed);
         const thumb = parseThumb(row.thumbnail_url);
         if (thumb) existing.thumb = thumb;
         return;
@@ -642,6 +646,7 @@
         vertical: row.orientation ? row.orientation.toLowerCase() === "vertical" : undefined,
         thumb: row.thumbnail_url,
         realClient: YES.test(row.real_client),
+        linkOnly: NO.test(row.embed || ""),
         client: row.client_name ? pair(row.client_name, row.client_name) : null,
         type: pair(row.category_en, row.category_ar),
         title: pair(row.title_en, row.title_ar),
@@ -677,8 +682,10 @@
     const frame = document.createElement("div");
     frame.className = "video-frame" + (p.vertical ? " vertical" : "");
 
-    const button = document.createElement("button");
-    button.type = "button";
+    /* linkOnly: for videos Facebook refuses to embed (copyright/music claims). The card opens the video on Facebook instead. */
+    const button = document.createElement(p.linkOnly ? "a" : "button");
+    if (p.linkOnly) { button.href = p.url; button.target = "_blank"; button.rel = "noopener noreferrer"; }
+    else button.type = "button";
     button.className = "video-facade";
     if (p.thumb) {
       const img = new Image();
@@ -690,7 +697,7 @@
     play.className = "play-icon";
     play.setAttribute("aria-hidden", "true");
     play.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
-    button.append(play, t("span", "video-hint", { en: "Tap to play", ar: "اضغط للتشغيل" }));
+    button.append(play, t("span", "video-hint", p.linkOnly ? { en: "Watch on Facebook", ar: "شاهد على فيسبوك" } : { en: "Tap to play", ar: "اضغط للتشغيل" }));
     frame.append(button);
 
     const info = document.createElement("div");
@@ -712,7 +719,7 @@
     info.append(link);
 
     /* The heavy video player is only loaded when the visitor taps play. */
-    button.addEventListener("click", () => {
+    if (!p.linkOnly) button.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
       iframe.src = p.embed;
       iframe.title = heading.textContent;
@@ -724,7 +731,7 @@
 
     /* No cover image supplied: use Facebook's own player, which shows the video's cover.
        loading="lazy" means it only loads when the visitor scrolls close to it. */
-    if (!p.thumb && p.preview) {
+    if (!p.thumb && p.preview && !p.linkOnly) {
       const preview = document.createElement("iframe");
       preview.src = p.preview;
       preview.title = heading.textContent;
@@ -743,7 +750,11 @@
     $$(".project").forEach(card => {
       const button = $(".video-facade", card);
       const heading = $("h3", card);
-      if (button && heading) button.setAttribute("aria-label", (lang === "ar" ? "تشغيل الفيديو: " : "Play video: ") + heading.textContent);
+      if (button && heading) {
+        const isLink = button.tagName === "A";
+        const prefix = isLink ? (lang === "ar" ? "شاهد على فيسبوك: " : "Watch on Facebook: ") : (lang === "ar" ? "تشغيل الفيديو: " : "Play video: ");
+        button.setAttribute("aria-label", prefix + heading.textContent);
+      }
     });
   }
 
