@@ -1,14 +1,58 @@
 <!doctype html>
-<html lang="en" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080a12">
+  <script>
+    /* Language is decided BEFORE first paint (no flash). Change "ar" to "en" to make English the default. */
+    (function () {
+      var lang = "ar";
+      try {
+        var saved = localStorage.getItem("aivengers-site-language");
+        if (saved === "ar" || saved === "en") lang = saved;
+      } catch (e) {}
+      try {
+        var q = new URLSearchParams(location.search).get("lang");
+        if (q === "ar" || q === "en") lang = q;
+      } catch (e) {}
+      window.__lang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    })();
+  </script>
+  <title>Aivengers AI — Cinematic video studio</title>
   <meta name="description" content="Aivengers AI creates cinematic AI videos, real video productions, and social-first commercials for brands and businesses.">
+  <link rel="canonical" href="https://mohamedalisoba3-star.github.io/aivengers-ai/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2351a8ff%22/%3E%3Cstop%20offset%3D%22.6%22%20stop-color%3D%22%239a76ff%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ff647c%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22800%22%20text-anchor%3D%22middle%22%20fill%3D%22%2307101b%22%3EA%3C/text%3E%3C/svg%3E">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Aivengers AI">
+  <meta property="og:url" content="https://mohamedalisoba3-star.github.io/aivengers-ai/">
   <meta property="og:title" content="Aivengers AI — Cinematic video studio">
   <meta property="og:description" content="Cinematic AI and real video production for brands, creators, and businesses.">
-  <title>Aivengers AI — Cinematic video studio</title>
+  <meta property="og:image" content="https://mohamedalisoba3-star.github.io/aivengers-ai/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://mohamedalisoba3-star.github.io/aivengers-ai/og-image.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400..900&family=Inter:wght@400..900&display=swap">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Aivengers AI",
+    "description": "Creative video production studio: cinematic AI videos, real video production, and social-first commercials.",
+    "url": "https://mohamedalisoba3-star.github.io/aivengers-ai/",
+    "sameAs": [
+      "https://www.facebook.com/share/1Ad38VRw7m/",
+      "https://www.instagram.com/aivengers.ai",
+      "https://youtube.com/@aivengersai-o4w",
+      "https://www.tiktok.com/@m.alisoba3"
+    ]
+  }
+  </script>
   <style>
     :root {
       color-scheme: dark;
@@ -29,12 +73,26 @@
     html { scroll-behavior: smooth; scroll-padding-top: 90px; }
     body {
       margin: 0;
-      background: var(--bg);
+      background: radial-gradient(ellipse at 12% 8%,rgba(39,105,213,.15),transparent 34%),radial-gradient(ellipse at 92% 31%,rgba(142,69,197,.12),transparent 31%),radial-gradient(ellipse at 64% 76%,rgba(213,66,105,.075),transparent 35%),linear-gradient(180deg,#080a12 0%,#0a0c17 48%,#080a12 100%);
       color: var(--text);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, Cairo, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      isolation: isolate;
     }
+    .ambient-scene { position: absolute; top: 0; left: 0; right: 0; height: 100vh; z-index: 0; overflow: hidden; pointer-events: none; isolation: isolate; background: radial-gradient(ellipse at 74% 43%,rgba(35,72,132,.24),transparent 44%),linear-gradient(180deg,rgba(8,10,18,.02),rgba(8,10,18,.2)); }
+    .studio-art { position: absolute; inset: 0; width: 100%; height: 100%; }
+    html[dir="rtl"] .studio-art { transform: scaleX(-1); }
+    .studio-art .light-beam { transform-origin: center; animation: beam-pass 12s ease-in-out infinite alternate; }
+    .studio-art .camera-rig { transform-box: fill-box; transform-origin: center; animation: camera-float 8s ease-in-out infinite alternate; }
+    .studio-art .softbox-glow { animation: softbox-pulse 5s ease-in-out infinite alternate; }
+    .studio-art .platform-glint { stroke-dasharray: 70 720; animation: platform-turn 12s linear infinite; }
+    .studio-art .floor-reflection { animation: reflection-shift 7s ease-in-out infinite alternate; }
+    @keyframes beam-pass { from { opacity: .48; transform: translateX(-18px) skewX(-3deg); } to { opacity: .82; transform: translateX(20px) skewX(3deg); } }
+    @keyframes camera-float { from { transform: translateY(5px) rotate(-.4deg); } to { transform: translateY(-9px) rotate(.5deg); } }
+    @keyframes softbox-pulse { from { opacity: .64; } to { opacity: 1; } }
+    @keyframes platform-turn { to { stroke-dashoffset: -790; } }
+    @keyframes reflection-shift { from { opacity: .3; transform: translateX(-18px); } to { opacity: .68; transform: translateX(18px); } }
     a { color: inherit; text-decoration: none; }
     a:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
     .wrap { width: min(var(--page), calc(100% - 48px)); margin-inline: auto; }
@@ -43,18 +101,26 @@
       background: rgba(8,10,18,.78); backdrop-filter: blur(18px);
       border-bottom: 1px solid var(--line);
     }
+    main, footer { position: relative; z-index: 1; }
     .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     .brand { display: inline-flex; align-items: center; gap: 11px; font-size: 19px; font-weight: 800; letter-spacing: -.04em; white-space: nowrap; }
     .brand-mark { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 11px; background: linear-gradient(140deg,var(--blue),var(--violet) 58%,var(--coral)); box-shadow: 0 8px 28px rgba(81,168,255,.22); font-size: 15px; }
     .brand em { color: #9dbdff; font-style: normal; }
     .nav-links { display: flex; align-items: center; gap: 30px; color: #c1c6d5; font-size: 14px; }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .menu-toggle { display: none; width: 44px; height: 44px; padding: 0; place-items: center; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); color: #eef1fa; cursor: pointer; }
+    .menu-toggle svg { width: 20px; height: 20px; }
+    .menu-toggle .icon-close { display: none; }
+    .menu-toggle[aria-expanded="true"] .icon-open { display: none; }
+    .menu-toggle[aria-expanded="true"] .icon-close { display: block; }
+    .menu-cta { display: none; }
     .nav-links a:not(.button):hover { color: #fff; }
     .button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; gap: 9px; padding: 0 20px; border: 1px solid transparent; border-radius: 999px; font-size: 14px; font-weight: 750; transition: transform .2s ease, border-color .2s ease, background .2s ease; }
     .button:hover { transform: translateY(-2px); }
     .button-primary { color: #07101b; background: linear-gradient(110deg,#74c2ff,#a995ff 58%,#ff8d9e); box-shadow: 0 10px 34px rgba(93,146,255,.2); }
     .button-quiet { border-color: var(--line); background: rgba(255,255,255,.04); color: #eef1fa; }
     .button-quiet:hover { border-color: rgba(255,255,255,.24); background: rgba(255,255,255,.08); }
-    .hero { position: relative; overflow: hidden; padding: 112px 0 96px; border-bottom: 1px solid var(--line); }
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 112px 0 96px; border-bottom: 1px solid var(--line); background: radial-gradient(ellipse at 48% 2%,rgba(54,102,204,.09),transparent 56%); }
     .hero::before, .hero::after { content: ""; position: absolute; z-index: -1; width: 540px; height: 540px; border-radius: 50%; filter: blur(95px); opacity: .27; pointer-events: none; }
     .hero::before { top: -280px; left: -100px; background: #087bff; }
     .hero::after { top: -220px; right: -140px; background: #c53268; }
@@ -82,9 +148,9 @@
     .video-frame.vertical { aspect-ratio: 4 / 5; }
     .video-frame iframe { display: block; width: 100%; height: 100%; border: 0; }
     .project-info { padding: 22px; }
-    .project-type { margin: 0; color: #91bfff; font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
+    .project-type { margin: 0; min-height: 0; color: #91bfff; font-size: 11px; font-weight: 750; letter-spacing: .13em; text-transform: uppercase; }
     .project h3 { margin: 9px 0 8px; font-size: 19px; line-height: 1.3; letter-spacing: -.025em; }
-    .project p { min-height: 52px; margin: 0; color: var(--muted); font-size: 14px; }
+    .project-desc { min-height: 52px; margin: 0; color: var(--muted); font-size: 14px; }
     .project-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 17px; color: #d7dfff; font-size: 13px; font-weight: 700; }
     .project-link:hover { color: #8cc8ff; }
     .project-client-badge { display: inline-flex; align-items: center; margin: 0 0 10px; padding: 5px 10px; border: 1px solid rgba(119,220,180,.28); border-radius: 999px; background: rgba(52,190,133,.1); color: #a8f0ce; font-size: 12px; font-weight: 750; }
@@ -105,7 +171,7 @@
     .pricing-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 12px; }
     .price-result { display: flex; flex-direction: column; justify-content: center; padding: 26px; border: 1px solid rgba(145,191,255,.2); border-radius: 20px; background: linear-gradient(145deg,rgba(81,168,255,.11),rgba(154,118,255,.08)); }
     .price-result-label { margin: 0; color: #b8c7e7; font-size: 13px; font-weight: 700; }
-    .price-amount { margin: 8px 0; font-size: clamp(35px,5vw,52px); line-height: 1.1; font-weight: 850; letter-spacing: -.04em; }
+    .price-amount { display: block; margin: 8px 0; font-size: clamp(35px,5vw,52px); line-height: 1.1; font-weight: 850; letter-spacing: -.04em; }
     .price-summary { margin: 0 0 20px; color: var(--muted); font-size: 13px; }
     .about-grid { display: grid; grid-template-columns: .85fr 1.15fr; align-items: center; gap: 68px; }
     .about-panel { position: relative; overflow: hidden; min-height: 300px; display: flex; align-items: end; padding: 28px; border: 1px solid var(--line); border-radius: 28px; background: radial-gradient(ellipse at 24% 20%,rgba(72,157,255,.35),transparent 45%),radial-gradient(ellipse at 90% 85%,rgba(255,91,125,.22),transparent 40%),linear-gradient(145deg,#151a29,#0c0e16); }
@@ -130,17 +196,7 @@
     .footer-brand { color: #cdd3e2; font-weight: 750; }
     .language-toggle { min-height: 42px; min-width: 58px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.04); color: #eef1fa; font: inherit; font-size: 13px; font-weight: 750; cursor: pointer; }
     .language-toggle:hover { background: rgba(255,255,255,.09); }
-    .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 20px; background: rgba(3,5,10,.78); backdrop-filter: blur(12px); }
-    .modal-backdrop[hidden] { display: none; }
-    .modal-card { width: min(100%, 520px); padding: clamp(28px,6vw,46px); border: 1px solid rgba(164,178,255,.24); border-radius: 26px; background: radial-gradient(ellipse at 10% 0%,rgba(67,157,255,.16),transparent 55%),#111522; box-shadow: 0 30px 100px rgba(0,0,0,.52); text-align: center; }
-    .modal-card h2 { margin: 0; font-size: clamp(28px,6vw,38px); }
-    .modal-card p { margin: 15px 0 0; color: var(--muted); line-height: 1.75; }
-    .language-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 27px; }
-    .language-choice { min-height: 58px; border: 1px solid rgba(145,191,255,.25); border-radius: 15px; background: rgba(255,255,255,.045); color: var(--text); font: inherit; font-size: 16px; font-weight: 750; cursor: pointer; }
-    .language-choice:hover { border-color: var(--blue); background: rgba(81,168,255,.11); }
-    .modal-card .button { margin-top: 25px; }
-    body.modal-open { overflow: hidden; }
-    html[dir="rtl"] body { font-family: Tahoma, "Segoe UI", Arial, sans-serif; }
+    html[dir="rtl"] body { font-family: Cairo, Tahoma, "Segoe UI", Arial, sans-serif; }
     html[dir="rtl"] .eyebrow, html[dir="rtl"] .section-kicker, html[dir="rtl"] .project-type { letter-spacing: 0; text-transform: none; }
     html[dir="rtl"] .about-panel::before { right: auto; left: 4px; }
     html[dir="rtl"] .text-link span { margin-left: 0; margin-right: 5px; }
@@ -154,12 +210,11 @@
       .why-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
     }
     @media (max-width: 650px) {
+      .studio-art { opacity: .58; transform: translateX(6%); }
       .wrap { width: min(var(--page), calc(100% - 36px)); }
       .nav { min-height: 68px; }
       .brand { font-size: 17px; }
       .brand-mark { width: 31px; height: 31px; }
-      .nav-links { gap: 12px; }
-      .nav-links a:not(.button) { display: none; }
       .nav .button { min-height: 41px; padding-inline: 15px; font-size: 13px; }
       .hero { padding: 88px 0 70px; }
       h1 { font-size: clamp(52px,15vw,76px); letter-spacing: -.07em; }
@@ -171,8 +226,8 @@
       .pricing-fields { grid-template-columns: 1fr; }
       .pricing-note { grid-column: 1; }
       .project-info { padding: 19px; }
-      .video-frame.vertical { aspect-ratio: 16 / 10; }
-      .project p { min-height: 0; }
+      .video-frame.vertical { aspect-ratio: 9 / 16; max-height: 78vh; }
+      .project-desc { min-height: 0; }
       .service { min-height: 0; }
       .about-grid { grid-template-columns: 1fr; gap: 28px; }
       .about-panel { min-height: 220px; }
@@ -185,42 +240,122 @@
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+      .studio-art .light-beam { animation-duration: 22s !important; }
+      .studio-art .camera-rig { animation-duration: 18s !important; }
+      .studio-art .softbox-glow { animation-duration: 18s !important; }
+      .studio-art .platform-glint { animation-duration: 28s !important; }
+      .studio-art .floor-reflection { animation-duration: 20s !important; }
+    }
+  
+    /* ---- added in the fix pass ---- */
+    button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+    .video-facade { position: relative; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; color: #fff; overflow: hidden;
+      background: radial-gradient(ellipse at 20% 15%,rgba(72,157,255,.34),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(255,91,125,.26),transparent 50%),linear-gradient(150deg,#161b2b,#0a0c14); }
+    .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .video-facade::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(3,5,10,.05),rgba(3,5,10,.55)); }
+    .play-icon { position: relative; z-index: 1; display: grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.4); backdrop-filter: blur(8px); transition: transform .2s ease, background .2s ease; }
+    .play-icon svg { margin-left: 3px; }
+    html[dir="rtl"] .play-icon svg { margin-left: 0; margin-right: 3px; transform: scaleX(1); }
+    .video-facade:hover .play-icon { transform: scale(1.07); background: rgba(255,255,255,.26); }
+    .video-hint { position: absolute; z-index: 1; bottom: 14px; inset-inline: 0; text-align: center; font-size: 12px; font-weight: 700; color: #e6ebfa; }
+    .client-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin: 26px 0 0; padding: 0; list-style: none; color: #9ea6bb; font-size: 13px; }
+    .client-strip[hidden] { display: none; }
+    .client-strip .client-label { color: #b8c7e7; font-weight: 700; }
+    .client-strip li:not(.client-label) { padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.03); color: #d3d9e8; }
+    .wa-float { position: fixed; z-index: 30; inset-inline-end: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #25d366; color: #06210f; box-shadow: 0 10px 30px rgba(0,0,0,.4); transition: transform .2s ease; }
+    .wa-float:hover { transform: translateY(-2px) scale(1.04); }
+    .wa-float svg { width: 28px; height: 28px; }
+    @media (max-width: 820px) {
+      .menu-toggle { display: grid; }
+      .nav-links { position: absolute; top: 100%; inset-inline: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: 6px 18px 18px; background: rgba(8,10,18,.97); backdrop-filter: blur(18px); border-bottom: 1px solid var(--line); font-size: 16px; }
+      .nav-links.open { display: flex; }
+      .nav-links a:not(.button) { padding: 15px 4px; border-bottom: 1px solid var(--line); }
+      .menu-cta { display: inline-flex; margin-top: 16px; }
+    }
+    @media (max-width: 560px) {
+      .nav-cta { display: none; }
+    }
+    @media (max-width: 650px) {
+      .studio-art .light-beam, .studio-art .camera-rig, .studio-art .softbox-glow,
+      .studio-art .platform-glint, .studio-art .floor-reflection { animation: none; }
     }
   </style>
 </head>
 <body>
-  <div class="modal-backdrop" id="language-modal" role="dialog" aria-modal="true" aria-labelledby="language-title">
-    <div class="modal-card">
-      <p class="section-kicker">Welcome to Aivengers AI / أهلاً بيك في Aivengers AI</p>
-      <h2 id="language-title">Choose your language / اختر لغتك</h2>
-      <p>Select a language to continue / اختار اللغة للمتابعة</p>
-      <div class="language-options">
-        <button class="language-choice" type="button" data-language="ar" lang="ar">العربية</button>
-        <button class="language-choice" type="button" data-language="en" lang="en">English</button>
-      </div>
-    </div>
-  </div>
-  <div class="modal-backdrop" id="intro-modal" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
-    <div class="modal-card">
-      <p class="section-kicker" data-bilingual="A quick introduction|نبذة سريعة">A quick introduction</p>
-      <h2 id="intro-title" data-bilingual="Who we are|من نحن">Who we are</h2>
-      <p data-bilingual="Aivengers AI is a creative video production studio. We create cinematic AI videos and real productions for brands, businesses, and creators.|Aivengers AI استوديو إبداعي لإنتاج الفيديو. بنصنع فيديوهات سينمائية بالذكاء الاصطناعي وإنتاجات حقيقية للعلامات التجارية والشركات وصنّاع المحتوى.">Aivengers AI is a creative video production studio. We create cinematic AI videos and real productions for brands, businesses, and creators.</p>
-      <button class="button button-primary" id="intro-continue" type="button"><span data-bilingual="Explore our work|شاهد أعمالنا">Explore our work</span> <span aria-hidden="true">&rarr;</span></button>
-    </div>
+<div class="ambient-scene" aria-hidden="true">
+    <svg class="studio-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="studioBackdrop" x2="0" y2="1"><stop stop-color="#111a2c" stop-opacity=".05"/><stop offset=".62" stop-color="#101522" stop-opacity=".4"/><stop offset="1" stop-color="#080a12" stop-opacity=".92"/></linearGradient>
+        <linearGradient id="softboxFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f4fbff" stop-opacity=".95"/><stop offset=".45" stop-color="#9dcfff" stop-opacity=".55"/><stop offset="1" stop-color="#5779b0" stop-opacity=".72"/></linearGradient>
+        <linearGradient id="roseFace" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff4f7" stop-opacity=".9"/><stop offset=".5" stop-color="#ffb5ca" stop-opacity=".5"/><stop offset="1" stop-color="#984d70" stop-opacity=".7"/></linearGradient>
+        <linearGradient id="cameraMetal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dce8fb"/><stop offset=".22" stop-color="#52627c"/><stop offset=".56" stop-color="#1d293b"/><stop offset="1" stop-color="#090e17"/></linearGradient>
+        <linearGradient id="lensGlass" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a6dcff" stop-opacity=".9"/><stop offset=".3" stop-color="#334f79"/><stop offset=".62" stop-color="#131c30"/><stop offset="1" stop-color="#080b13"/></linearGradient>
+        <linearGradient id="beamBlue" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#6abaff" stop-opacity="0"/><stop offset=".5" stop-color="#b3ddff" stop-opacity=".32"/><stop offset="1" stop-color="#6abaff" stop-opacity="0"/></linearGradient>
+        <linearGradient id="beamRose" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#ff84ae" stop-opacity="0"/><stop offset=".5" stop-color="#ffd4e1" stop-opacity=".24"/><stop offset="1" stop-color="#ff84ae" stop-opacity="0"/></linearGradient>
+        <linearGradient id="pedestalSide" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#60769a"/><stop offset=".18" stop-color="#27344b"/><stop offset="1" stop-color="#090d16"/></linearGradient>
+        <radialGradient id="lensGlow"><stop stop-color="#d6f1ff" stop-opacity=".9"/><stop offset=".28" stop-color="#478bca" stop-opacity=".7"/><stop offset=".7" stop-color="#16233c"/><stop offset="1" stop-color="#070b13"/></radialGradient>
+        <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="24"/></filter>
+        <filter id="smallGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="8"/></filter>
+      </defs>
+      <rect width="1440" height="900" fill="url(#studioBackdrop)"/>
+      <g class="light-beam"><path d="M90 70 L345 70 L760 680 L390 680Z" fill="url(#beamBlue)"/><path d="M1260 65 L1400 65 L1030 690 L850 690Z" fill="url(#beamRose)"/></g>
+      <ellipse cx="870" cy="690" rx="600" ry="135" fill="#538bce" opacity=".12" filter="url(#softGlow)"/>
+      <path d="M0 675 Q720 610 1440 675V900H0Z" fill="#0b101b" opacity=".8"/>
+      <path d="M0 682 Q720 617 1440 682" fill="none" stroke="#7895bd" stroke-opacity=".24" stroke-width="2"/>
+      <g opacity=".16" stroke="#9ab8e7" stroke-width="1"><path d="M720 642L130 900M720 642L380 900M720 642L590 900M720 642L850 900M720 642L1070 900M720 642L1320 900"/><path d="M0 735Q720 690 1440 735M0 795Q720 755 1440 795M0 860Q720 828 1440 860"/></g>
+      <g class="softbox-glow"><path d="M210 130L392 112L420 390L235 413Z" fill="#7cbcff" opacity=".22" filter="url(#smallGlow)"/><path d="M1115 125L1270 145L1228 408L1070 385Z" fill="#ff9fbe" opacity=".2" filter="url(#smallGlow)"/></g>
+      <g opacity=".82"><path d="M184 120L375 98L402 360L212 385Z" fill="#121c2c" stroke="#c8dfff" stroke-opacity=".55" stroke-width="5"/><path d="M198 136L360 119L385 342L226 363Z" fill="url(#softboxFace)"/><path d="M198 136L360 119" stroke="#fff" stroke-opacity=".9" stroke-width="4"/><path d="M292 378L292 600M292 468L210 620M292 468L374 600" fill="none" stroke="#485c7b" stroke-width="12" stroke-linecap="round"/><path d="M281 386L306 383L309 411L284 414Z" fill="#9ebbe3"/></g>
+      <g opacity=".72"><path d="M1097 137L1262 158L1223 382L1060 361Z" fill="#211723" stroke="#ffd6e2" stroke-opacity=".52" stroke-width="5"/><path d="M1111 153L1245 170L1210 359L1078 343Z" fill="url(#roseFace)"/><path d="M1111 153L1245 170" stroke="#fff" stroke-opacity=".85" stroke-width="4"/><path d="M1159 370L1124 594M1159 466L1078 610M1159 466L1230 623" fill="none" stroke="#67505e" stroke-width="11" stroke-linecap="round"/></g>
+      <g class="camera-rig">
+        <ellipse cx="1138" cy="636" rx="190" ry="34" fill="#79bfff" opacity=".16" filter="url(#smallGlow)"/>
+        <path d="M1087 500L1196 477L1234 522L1210 714M1158 509L1099 723M1181 502L1288 705" fill="none" stroke="#4b5e78" stroke-width="19" stroke-linecap="round"/>
+        <path d="M1090 488L1190 468L1226 493L1126 518Z" fill="#899bb6" stroke="#d4e5fc" stroke-opacity=".65" stroke-width="3"/>
+        <path d="M984 326L1187 289L1275 333L1262 458L1050 496L972 450Z" fill="url(#cameraMetal)" stroke="#b4c7e3" stroke-opacity=".65" stroke-width="4"/>
+        <path d="M984 326L1187 289L1186 394L978 432Z" fill="#26374e" stroke="#c2d8f5" stroke-opacity=".42" stroke-width="3"/>
+        <path d="M1187 289L1275 333L1262 458L1186 394Z" fill="#111a29" stroke="#8799b5" stroke-opacity=".5" stroke-width="3"/>
+        <path d="M1047 311L1090 257L1168 243L1210 291L1115 310Z" fill="#1b2638" stroke="#adbfda" stroke-opacity=".6" stroke-width="3"/>
+        <path d="M1070 305L1095 271L1159 260L1183 294Z" fill="#647892" opacity=".8"/>
+        <path d="M958 365L1025 350L1053 379L1048 455L980 470L944 435Z" fill="#111b2a" stroke="#c3d5ee" stroke-opacity=".55" stroke-width="4"/>
+        <ellipse cx="974" cy="411" rx="43" ry="57" transform="rotate(12 974 411)" fill="#101a2a" stroke="#b9d8f8" stroke-width="5"/>
+        <ellipse cx="965" cy="412" rx="30" ry="43" transform="rotate(12 965 412)" fill="#0b1220" stroke="#6ca7df" stroke-width="5"/>
+        <ellipse cx="958" cy="412" rx="21" ry="32" transform="rotate(12 958 412)" fill="url(#lensGlass)" stroke="#d5e9ff" stroke-opacity=".72" stroke-width="3"/>
+        <ellipse cx="954" cy="409" rx="9" ry="14" fill="url(#lensGlow)"/>
+        <path d="M1204 344L1245 352L1243 386L1202 378Z" fill="#101a28" stroke="#9fb6d5" stroke-opacity=".6" stroke-width="3"/><circle cx="1223" cy="362" r="8" fill="#ff667e"/>
+        <rect x="1120" y="331" width="45" height="25" rx="5" transform="rotate(-10 1120 331)" fill="#a9dfff" opacity=".78"/>
+        <path d="M1004 462L1218 424" stroke="#d9e9ff" stroke-opacity=".45" stroke-width="3"/>
+      </g>
+      <g class="product-platform">
+        <path d="M615 690L830 690L889 737L565 737Z" fill="#202b3d" stroke="#92b6e7" stroke-opacity=".62" stroke-width="3"/>
+        <path d="M565 737L889 737L866 801L590 801Z" fill="url(#pedestalSide)" stroke="#7189ad" stroke-opacity=".5" stroke-width="2"/>
+        <path d="M590 801L866 801L900 825L553 825Z" fill="#111927" stroke="#829bbd" stroke-opacity=".54" stroke-width="3"/>
+        <ellipse cx="727" cy="690" rx="165" ry="34" fill="#7dc2ff" opacity=".2" filter="url(#smallGlow)"/>
+        <ellipse cx="722" cy="686" rx="157" ry="31" fill="#243852" stroke="#c0dcff" stroke-opacity=".88" stroke-width="4"/>
+        <ellipse cx="722" cy="682" rx="127" ry="21" fill="#101b2b" stroke="#79b9f6" stroke-opacity=".72" stroke-width="3"/>
+        <ellipse class="platform-glint" cx="722" cy="682" rx="142" ry="26" fill="none" stroke="#f1f8ff" stroke-opacity=".94" stroke-width="5"/>
+        <path class="floor-reflection" d="M570 837Q720 862 875 837" fill="none" stroke="#83c4ff" stroke-opacity=".54" stroke-width="4" filter="url(#smallGlow)"/>
+      </g>
+    </svg>
   </div>
   <header class="topbar">
     <div class="wrap nav">
-      <a class="brand" href="#top" aria-label="Aivengers AI home"><span class="brand-mark" aria-hidden="true">A</span><span>Aivengers <em>AI</em></span></a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a href="#pricing" data-bilingual="Pricing|الأسعار">Pricing</a>
-        <a href="#work" data-bilingual="Work|الأعمال">Work</a>
-        <a href="#services" data-bilingual="Services|الخدمات">Services</a>
-        <a href="#about" data-bilingual="About|من نحن">About</a>
-        <a href="#contact" data-bilingual="Contact|تواصل معنا">Contact</a>
-        <button class="language-toggle" id="language-toggle" type="button" aria-label="Change language">AR</button>
-        <a class="button button-quiet" href="https://wa.me/201111750034?text=Hi%20Aivengers%20AI%2C%20I%20want%20to%20start%20a%20video%20project." target="_blank" rel="noopener noreferrer">Let’s talk <span aria-hidden="true">↗</span></a>
+      <a class="brand" href="#top" aria-label="Aivengers AI"><span class="brand-mark" aria-hidden="true">A</span><span>Aivengers <em>AI</em></span></a>
+      <nav class="nav-links" id="nav-menu" data-en="Main navigation" data-ar="القائمة الرئيسية" data-attr="aria-label" aria-label="Main navigation">
+        <a href="#pricing" data-en="Pricing" data-ar="الأسعار">Pricing</a>
+        <a href="#work" data-en="Work" data-ar="الأعمال">Work</a>
+        <a href="#services" data-en="Services" data-ar="الخدمات">Services</a>
+        <a href="#about" data-en="About" data-ar="من نحن">About</a>
+        <a href="#contact" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+        <a class="button button-primary menu-cta" data-wa="general" target="_blank" rel="noopener noreferrer" href="#contact"><span data-en="Let’s talk" data-ar="خلينا نتكلم">Let’s talk</span> <span aria-hidden="true">↗</span></a>
       </nav>
+      <div class="nav-actions">
+        <button class="language-toggle" id="language-toggle" type="button" data-attr="aria-label" data-en="Switch to Arabic" data-ar="Switch to English" aria-label="Switch to Arabic"><span data-en="عربي" data-ar="EN">عربي</span></button>
+        <a class="button button-quiet nav-cta" data-wa="general" target="_blank" rel="noopener noreferrer" href="#contact"><span data-en="Let’s talk" data-ar="خلينا نتكلم">Let’s talk</span> <span aria-hidden="true">↗</span></a>
+        <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" data-attr="aria-label" data-en="Open menu" data-ar="فتح القائمة" aria-label="Open menu">
+          <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -228,14 +363,15 @@
     <section class="hero">
       <div class="wrap">
         <div class="hero-inner">
-          <div class="eyebrow" data-bilingual="Cinematic AI studio|استوديو فيديو سينمائي بالذكاء الاصطناعي">Cinematic AI studio</div>
-          <h1><span data-bilingual="Stories that make people|قصص تخلي الناس">Stories that make people</span> <span class="gradient-text" data-bilingual="stop scrolling.|توقف التمرير.">stop scrolling.</span></h1>
-          <p class="hero-lede" data-bilingual="Cinematic AI videos and real video production for brands, creators, and businesses ready to stand out.|فيديوهات سينمائية بالذكاء الاصطناعي وإنتاج فيديو حقيقي للعلامات التجارية وصنّاع المحتوى والشركات اللي عايزة تتميز.">Cinematic AI videos and real video production for brands, creators, and businesses ready to stand out.</p>
+          <div class="eyebrow" data-en="Cinematic AI studio" data-ar="استوديو فيديو سينمائي بالذكاء الاصطناعي">Cinematic AI studio</div>
+          <h1><span data-en="Stories that make people" data-ar="قصص تخلي الناس">Stories that make people</span> <span class="gradient-text" data-en="stop scrolling." data-ar="توقف التمرير.">stop scrolling.</span></h1>
+          <p class="hero-lede" data-en="Cinematic AI videos and real video production for brands, creators, and businesses ready to stand out." data-ar="فيديوهات سينمائية بالذكاء الاصطناعي وإنتاج فيديو حقيقي للعلامات التجارية وصنّاع المحتوى والشركات اللي عايزة تتميز.">Cinematic AI videos and real video production for brands, creators, and businesses ready to stand out.</p>
           <div class="hero-actions">
-            <a class="button button-primary" href="#work">Explore our work <span aria-hidden="true">↓</span></a>
-            <a class="button button-quiet" href="https://wa.me/201111750034?text=Hi%20Aivengers%20AI%2C%20I%20want%20to%20start%20a%20video%20project." target="_blank" rel="noopener noreferrer">Start a project <span aria-hidden="true">↗</span></a>
+            <a class="button button-primary" href="#work" ><span data-en="Explore our work" data-ar="شاهد أعمالنا">Explore our work</span> <span aria-hidden="true">↓</span></a>
+            <a class="button button-quiet" href="#contact" data-wa="general" target="_blank" rel="noopener noreferrer"><span data-en="Start a project" data-ar="ابدأ مشروعك">Start a project</span> <span aria-hidden="true">↗</span></a>
           </div>
-          <div class="hero-note" aria-label="Studio capabilities"><span data-bilingual="AI-powered visuals|مشاهد بالذكاء الاصطناعي">AI-powered visuals</span><span data-bilingual="Real production|تصوير وإنتاج حقيقي">Real production</span><span data-bilingual="Social-first storytelling|قصص مناسبة للسوشيال ميديا">Social-first storytelling</span></div>
+          <div class="hero-note"><span data-en="AI-powered visuals" data-ar="مشاهد بالذكاء الاصطناعي">AI-powered visuals</span><span data-en="Real production" data-ar="تصوير وإنتاج حقيقي">Real production</span><span data-en="Social-first storytelling" data-ar="قصص مناسبة للسوشيال ميديا">Social-first storytelling</span></div>
+          <ul class="client-strip" id="client-strip" hidden></ul>
         </div>
       </div>
     </section>
@@ -243,380 +379,512 @@
     <section id="work">
       <div class="wrap">
         <div class="section-head">
-          <div><p class="section-kicker">Selected projects</p><h2>Made to be remembered.</h2><p class="section-copy">A selection of cinematic AI commercials, product films, action scenes, and animated stories.</p></div>
-          <a class="text-link" href="https://www.facebook.com/100063914521459/" target="_blank" rel="noopener noreferrer">More work on Facebook <span aria-hidden="true">↗</span></a>
+          <div><p class="section-kicker" data-en="Selected projects" data-ar="أعمال مختارة">Selected projects</p><h2 data-en="Made to be remembered." data-ar="أعمال تفضل في الذاكرة.">Made to be remembered.</h2><p class="section-copy" data-en="A selection of cinematic AI commercials, product films, action scenes, and animated stories." data-ar="مجموعة مختارة من الإعلانات السينمائية بالذكاء الاصطناعي وأفلام المنتجات ومشاهد الحركة والحكايات الكرتونية.">A selection of cinematic AI commercials, product films, action scenes, and animated stories.</p></div>
+          <a class="text-link" href="https://www.facebook.com/100063914521459/" target="_blank" rel="noopener noreferrer"><span data-en="More work on Facebook" data-ar="شاهد المزيد على فيسبوك">More work on Facebook</span> <span aria-hidden="true">↗</span></a>
         </div>
-        <div class="work-grid">
-          <article class="project">
-            <div class="video-frame vertical"><iframe title="Cinematic chocolate product advertisement" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1081454844385721%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">AI product commercial</p><h3>Cinematic Chocolate Product Ad</h3><p>A premium, cinematic presentation for a chocolate product.</p><a class="project-link" href="https://www.facebook.com/reel/1081454844385721/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame vertical"><iframe title="Dessert shop commercial" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F2118001358852939%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><span class="project-client-badge" data-bilingual="One of our latest projects for Helwan El-Halmia Patisserie|من أحدث أعمالنا لحلواني الحلمية">من أحدث أعمالنا لحلواني الحلمية</span><p class="project-type">AI food commercial</p><h3>Dessert Shop Commercial</h3><p>A cinematic ad designed to make every product look irresistible.</p><a class="project-link" href="https://www.facebook.com/reel/2118001358852939/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame vertical"><iframe title="Al Anteel Restaurant Ad" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1109252104803509%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><span class="project-client-badge" data-bilingual="One of our latest projects for Al Anteel Restaurant|من أحدث أعمالنا لمطعم العنتيل">من أحدث أعمالنا لمطعم العنتيل</span><p class="project-type" data-bilingual="Real client project|عمل حقيقي لعميل">عمل حقيقي لعميل</p><h3 data-bilingual="Al Anteel Restaurant Ad|إعلان مطعم العنتيل">إعلان مطعم العنتيل</h3><p data-bilingual="A completed video project for Al Anteel Restaurant.|فيديو تم تنفيذه وتسليمه لمطعم العنتيل.">فيديو تم تنفيذه وتسليمه لمطعم العنتيل.</p><a class="project-link" href="https://www.facebook.com/reel/1109252104803509/" target="_blank" rel="noopener noreferrer" data-bilingual="Watch project|شاهد العمل">شاهد العمل</a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame vertical"><iframe title="Mini Runner Market AI commercial" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1056300057368949%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">AI cinematic commercial</p><h3>Mini Runner Market Ad</h3><p>A playful parkour chase through a bustling market, created for social video.</p><a class="project-link" href="https://www.facebook.com/reel/1056300057368949/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame"><iframe title="Premium nuts roastery advertisement" src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F27655261734151071%2F&amp;show_text=false&amp;width=560&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">AI food commercial</p><h3>Premium Nuts Roastery Ad</h3><p>A rich visual story focused on freshness, flavor, and product appeal.</p><a class="project-link" href="https://www.facebook.com/reel/27655261734151071/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame"><iframe title="Cinematic action scene showcase" src="https://www.facebook.com/plugins/video.php?height=314&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F3674169399412917%2F&amp;show_text=false&amp;width=560&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">Cinematic action sequence</p><h3>Action Scene Showcase</h3><p>Dynamic movement and dramatic visuals shaped into a cinematic sequence.</p><a class="project-link" href="https://www.facebook.com/reel/3674169399412917/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-          <article class="project">
-            <div class="video-frame vertical"><iframe title="Animated character stories" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1363147695804228%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
-            <div class="project-info"><p class="project-type">AI cartoon series</p><h3>Animated Character Stories</h3><p>Original characters brought to life through short, entertaining stories.</p><a class="project-link" href="https://www.facebook.com/reel/1363147695804228/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
-          </article>
-        </div>
+        <div class="work-grid" id="work-grid"></div>
       </div>
     </section>
 
     <section class="pricing" id="pricing">
       <div class="wrap">
-        <div class="section-head"><div><p class="section-kicker" data-bilingual="Transparent pricing|أسعار واضحة">Transparent pricing</p><h2 data-bilingual="Build your video package.|اختار تفاصيل إعلانك.">Build your video package.</h2><p class="section-copy" data-bilingual="Choose the format, length, and voice-over to see an estimated price instantly.|اختار نوع الإعلان ومدته والتعليق الصوتي عشان تعرف السعر التقديري فورًا.">Choose the format, length, and voice-over to see an estimated price instantly.</p></div></div>
+        <div class="section-head"><div><p class="section-kicker" data-en="Transparent pricing" data-ar="أسعار واضحة">Transparent pricing</p><h2 data-en="Build your video package." data-ar="اختار تفاصيل إعلانك.">Build your video package.</h2><p class="section-copy" data-en="Choose the format, length, and voice-over to see an estimated price instantly." data-ar="اختار نوع الإعلان ومدته والتعليق الصوتي عشان تعرف السعر التقديري فورًا.">Choose the format, length, and voice-over to see an estimated price instantly.</p></div></div>
         <div class="pricing-panel">
           <div class="pricing-fields">
-            <div class="pricing-field"><label for="price-duration" data-bilingual="Video duration|مدة الفيديو">Video duration</label><select id="price-duration"><option value="15" data-bilingual="15 seconds|15 ثانية">15 seconds</option><option value="30" selected data-bilingual="30 seconds|30 ثانية">30 seconds</option><option value="60" data-bilingual="60 seconds|60 ثانية">60 seconds</option></select></div>
-            <div class="pricing-field"><label for="price-format" data-bilingual="Ad format|نوع الإعلان">Ad format</label><select id="price-format"><option value="tabletop" data-bilingual="Tabletop product ad|تصوير منتج Tabletop">Tabletop product ad</option><option value="location" data-bilingual="Place or venue ad|إعلان لمكان">Place or venue ad</option><option value="ugc" data-bilingual="UGC-style ad|إعلان بأسلوب UGC">UGC-style ad</option><option value="cartoon" data-bilingual="Cartoon video|فيديو كرتوني">Cartoon video</option></select></div>
-            <div class="pricing-field" id="quality-field"><label for="price-quality" data-bilingual="Production quality|جودة التنفيذ">Production quality</label><select id="price-quality"><option value="standard" data-bilingual="Standard quality|جودة قياسية">Standard quality</option><option value="lower" data-bilingual="Lower-cost quality|جودة أقل">Lower-cost quality</option></select></div>
-            <div class="pricing-field"><label for="price-voiceover" data-bilingual="Voice-over|تعليق صوتي">Voice-over</label><select id="price-voiceover"><option value="no" data-bilingual="No|لا">No</option><option value="yes" data-bilingual="Yes|نعم">Yes</option></select></div>
-            <p class="pricing-note" id="voiceover-note" data-bilingual="Voice-over is available for the first three formats; cartoon videos do not include voice-over.|التعليق الصوتي متاح لأول 3 أنواع، ولا يتوفر للفيديو الكرتوني.">Voice-over is available for the first three formats; cartoon videos do not include voice-over.</p>
+            <div class="pricing-field"><label for="price-duration" data-en="Video duration" data-ar="مدة الفيديو">Video duration</label><select id="price-duration"><option value="15" data-en="15 seconds" data-ar="15 ثانية">15 seconds</option><option value="30" selected data-en="30 seconds" data-ar="30 ثانية">30 seconds</option><option value="60" data-en="60 seconds" data-ar="60 ثانية">60 seconds</option></select></div>
+            <div class="pricing-field"><label for="price-format" data-en="Ad format" data-ar="نوع الإعلان">Ad format</label><select id="price-format"><option value="tabletop" data-en="Tabletop product ad" data-ar="تصوير منتج Tabletop">Tabletop product ad</option><option value="location" data-en="Place or venue ad" data-ar="إعلان لمكان">Place or venue ad</option><option value="ugc" data-en="UGC-style ad" data-ar="إعلان بأسلوب UGC">UGC-style ad</option><option value="cartoon" data-en="Cartoon video" data-ar="فيديو كرتوني">Cartoon video</option></select></div>
+            <div class="pricing-field" id="quality-field"><label for="price-quality" data-en="Production quality" data-ar="جودة التنفيذ">Production quality</label><select id="price-quality"><option value="standard" data-en="Standard quality" data-ar="جودة قياسية">Standard quality</option><option value="lower" data-en="Basic quality" data-ar="جودة اقتصادية">Basic quality</option></select></div>
+            <div class="pricing-field"><label for="price-voiceover" data-en="Voice-over" data-ar="تعليق صوتي">Voice-over</label><select id="price-voiceover"><option value="no" data-en="No" data-ar="لا">No</option><option value="yes" data-en="Yes" data-ar="نعم">Yes</option></select></div>
+            <p class="pricing-note" data-en="Voice-over is available for the first three formats; cartoon videos do not include voice-over." data-ar="التعليق الصوتي متاح لأول 3 أنواع، ولا يتوفر للفيديو الكرتوني.">Voice-over is available for the first three formats; cartoon videos do not include voice-over.</p>
           </div>
-          <div class="price-result" aria-live="polite"><p class="price-result-label" data-bilingual="Estimated price|السعر التقديري">Estimated price</p><output id="price-amount" class="price-amount">EGP 1,200</output><p id="price-summary" class="price-summary">30 seconds · Tabletop product ad · No voice-over</p><a id="price-contact" class="button button-primary" href="https://wa.me/201111750034" target="_blank" rel="noopener noreferrer" data-bilingual="Ask about this package|اسأل عن الباقة دي">Ask about this package</a></div>
+          <div class="price-result" aria-live="polite">
+            <p class="price-result-label" data-en="Estimated price" data-ar="السعر التقديري">Estimated price</p>
+            <output id="price-amount" class="price-amount">EGP 1,200</output>
+            <p id="price-summary" class="price-summary">30 seconds · Tabletop product ad · No voice-over</p>
+            <a id="price-contact" class="button button-primary" href="#contact" target="_blank" rel="noopener noreferrer"><span data-en="Ask about this package" data-ar="اسأل عن الباقة دي">Ask about this package</span></a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="services" id="services">
       <div class="wrap">
-        <div class="section-head"><div><p class="section-kicker">What we do</p><h2>One studio. Many ways to tell a story.</h2><p class="section-copy">Creative video production for brands, businesses, restaurants, real estate, creators, and social campaigns.</p></div></div>
+        <div class="section-head"><div><p class="section-kicker" data-en="What we do" data-ar="خدماتنا">What we do</p><h2 data-en="One studio. Many ways to tell a story." data-ar="استوديو واحد.. وحكايات بأشكال مختلفة.">One studio. Many ways to tell a story.</h2><p class="section-copy" data-en="Creative video production for brands, businesses, restaurants, real estate, creators, and social campaigns." data-ar="إنتاج فيديو إبداعي للعلامات التجارية والشركات والمطاعم والعقارات وصنّاع المحتوى وحملات السوشيال ميديا.">Creative video production for brands, businesses, restaurants, real estate, creators, and social campaigns.</p></div></div>
         <div class="services-grid">
-          <article class="service"><span class="service-icon" aria-hidden="true">✦</span><h3>AI Video Production</h3><p>Cinematic AI-generated visuals for modern brands and digital campaigns.</p></article>
-          <article class="service"><span class="service-icon" aria-hidden="true">◉</span><h3>Real Video Production</h3><p>On-location shooting and production for businesses and social content.</p></article>
-          <article class="service"><span class="service-icon" aria-hidden="true">◇</span><h3>Product Commercials</h3><p>Polished product films built to catch attention and communicate value.</p></article>
-          <article class="service"><span class="service-icon" aria-hidden="true">▣</span><h3>Social Media Ads</h3><p>Short-form videos for Facebook, Instagram, TikTok, and YouTube.</p></article>
-          <article class="service"><span class="service-icon" aria-hidden="true">⌁</span><h3>Cinematic Editing</h3><p>Story, pacing, sound, and finishing shaped into a cohesive film.</p></article>
-          <article class="service"><span class="service-icon" aria-hidden="true">✧</span><h3>Creative Concepts</h3><p>Fresh ideas and visual directions tailored to each project.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">✦</span><h3 data-en="AI Video Production" data-ar="إنتاج فيديو بالذكاء الاصطناعي">AI Video Production</h3><p data-en="Cinematic AI-generated visuals for modern brands and digital campaigns." data-ar="مشاهد سينمائية مولّدة بالذكاء الاصطناعي للعلامات التجارية والحملات الرقمية.">Cinematic AI-generated visuals for modern brands and digital campaigns.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">◉</span><h3 data-en="Real Video Production" data-ar="إنتاج وتصوير حقيقي">Real Video Production</h3><p data-en="On-location shooting and production for businesses and social content." data-ar="تصوير وإنتاج في مواقع العمل للشركات ومحتوى السوشيال ميديا.">On-location shooting and production for businesses and social content.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">◇</span><h3 data-en="Product Commercials" data-ar="إعلانات المنتجات">Product Commercials</h3><p data-en="Polished product films built to catch attention and communicate value." data-ar="أفلام منتجات متقنة تلفت الانتباه وتوضح قيمة المنتج.">Polished product films built to catch attention and communicate value.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">▣</span><h3 data-en="Social Media Ads" data-ar="إعلانات السوشيال ميديا">Social Media Ads</h3><p data-en="Short-form videos for Facebook, Instagram, TikTok, and YouTube." data-ar="فيديوهات قصيرة لفيسبوك وإنستغرام وتيك توك ويوتيوب.">Short-form videos for Facebook, Instagram, TikTok, and YouTube.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">⌁</span><h3 data-en="Cinematic Editing" data-ar="مونتاج سينمائي">Cinematic Editing</h3><p data-en="Story, pacing, sound, and finishing shaped into a cohesive film." data-ar="قصة وإيقاع وصوت ولمسات نهائية متناسقة في فيديو واحد.">Story, pacing, sound, and finishing shaped into a cohesive film.</p></article>
+          <article class="service"><span class="service-icon" aria-hidden="true">✧</span><h3 data-en="Creative Concepts" data-ar="أفكار إبداعية">Creative Concepts</h3><p data-en="Fresh ideas and visual directions tailored to each project." data-ar="أفكار ورؤى بصرية جديدة تناسب كل مشروع.">Fresh ideas and visual directions tailored to each project.</p></article>
         </div>
       </div>
     </section>
 
     <section id="about">
       <div class="wrap about-grid">
-        <div class="about-panel"><div class="about-caption">A creative video studio combining new visual tools with real-world production.</div></div>
-        <div class="about-copy"><p class="section-kicker">About Aivengers AI</p><h2>Big ideas deserve a bold screen presence.</h2><p>Aivengers AI is a creative video production studio focused on cinematic AI videos, real productions, and high-impact visual content for brands and businesses.</p><p>From the first concept to the final edit, we shape each project around its message, audience, and platform.</p><a class="text-link" href="#contact">Tell us about your project <span aria-hidden="true">↗</span></a></div>
+        <div class="about-panel"><div class="about-caption" data-en="A creative video studio combining new visual tools with real-world production." data-ar="استوديو فيديو إبداعي يجمع بين أدوات الصورة الحديثة والإنتاج الواقعي.">A creative video studio combining new visual tools with real-world production.</div></div>
+        <div class="about-copy"><p class="section-kicker" data-en="About Aivengers AI" data-ar="عن Aivengers AI">About Aivengers AI</p><h2 data-en="Big ideas deserve a bold screen presence." data-ar="الأفكار الكبيرة تستحق حضورًا قويًا على الشاشة.">Big ideas deserve a bold screen presence.</h2><p data-en="We specialize in product commercials and creative concepts. Our team includes an assistant director, a director of photography, and an editing team. We also offer real-world filming, including tabletop photography: carefully arranged and lit product shots on a table or small set to highlight details and textures. We combine live-action and AI video to fit each project." data-ar="إحنا فريق متخصص في إعلانات المنتجات والأفكار الإبداعية، وبيضم مساعد مخرج ومدير تصوير وفريق مونتاج. بنقدم كمان تصويرًا حقيقيًا، ومنه تصوير الـTabletop: تصوير المنتج على سطح أو طاولة بإضاءة وترتيب مدروسين لإبراز تفاصيله وخاماته. وبنستخدم التصوير الحقيقي أو الذكاء الاصطناعي أو نمزج بينهم حسب كل مشروع.">We specialize in product commercials and creative concepts. Our team includes an assistant director, a director of photography, and an editing team. We also offer real-world filming, including tabletop photography: carefully arranged and lit product shots on a table or small set to highlight details and textures. We combine live-action and AI video to fit each project.</p><p data-en="From the first concept to the final edit, we shape each project around its message, audience, and platform." data-ar="من أول فكرة لحد المونتاج النهائي، بنصمم كل مشروع بما يناسب رسالته وجمهوره والمنصة اللي هيتعرض عليها.">From the first concept to the final edit, we shape each project around its message, audience, and platform.</p><a class="text-link" href="#contact" ><span data-en="Tell us about your project" data-ar="احكيلنا عن مشروعك">Tell us about your project</span> <span aria-hidden="true">↗</span></a></div>
       </div>
     </section>
 
     <section class="why">
-      <div class="wrap"><p class="section-kicker">Why Aivengers</p><h2>Creative thinking, finished with care.</h2>
+      <div class="wrap"><p class="section-kicker" data-en="Why Aivengers" data-ar="لماذا Aivengers؟">Why Aivengers</p><h2 data-en="Creative thinking, finished with care." data-ar="فكرة مبدعة وتنفيذ متقن.">Creative thinking, finished with care.</h2>
         <div class="why-grid">
-          <article class="why-item"><h3>Clear creative direction</h3><p>Every video starts with an idea shaped around the project.</p></article>
-          <article class="why-item"><h3>AI + real production</h3><p>We combine AI visuals and real production when the brief calls for it.</p></article>
-          <article class="why-item"><h3>Made for the platform</h3><p>Format and pacing are considered for where the video will be seen.</p></article>
-          <article class="why-item"><h3>Polished storytelling</h3><p>Visuals, editing, music, and sound work together as one story.</p></article>
+          <article class="why-item"><h3 data-en="Clear creative direction" data-ar="رؤية إبداعية واضحة">Clear creative direction</h3><p data-en="Every video starts with an idea shaped around the project." data-ar="كل فيديو بيبدأ بفكرة مصممة خصيصًا للمشروع.">Every video starts with an idea shaped around the project.</p></article>
+          <article class="why-item"><h3 data-en="AI + real production" data-ar="ذكاء اصطناعي وإنتاج حقيقي">AI + real production</h3><p data-en="We combine AI visuals and real production when the brief calls for it." data-ar="بنجمع بين مشاهد الذكاء الاصطناعي والإنتاج الحقيقي حسب احتياج المشروع.">We combine AI visuals and real production when the brief calls for it.</p></article>
+          <article class="why-item"><h3 data-en="Made for the platform" data-ar="مصمم للمنصة">Made for the platform</h3><p data-en="Format and pacing are considered for where the video will be seen." data-ar="بنراعي شكل الفيديو وإيقاعه حسب المنصة اللي هيتعرض عليها.">Format and pacing are considered for where the video will be seen.</p></article>
+          <article class="why-item"><h3 data-en="Polished storytelling" data-ar="حكاية متقنة">Polished storytelling</h3><p data-en="Visuals, editing, music, and sound work together as one story." data-ar="الصورة والمونتاج والموسيقى والصوت بيشتغلوا مع بعض كحكاية واحدة.">Visuals, editing, music, and sound work together as one story.</p></article>
         </div>
       </div>
     </section>
 
     <section class="contact" id="contact">
-      <div class="wrap"><div class="contact-box"><p class="section-kicker">Have a project in mind?</p><h2>Let’s make something worth watching.</h2><p class="section-copy">Tell us what you’re creating and where you want it to live. We’ll discuss the right direction and prepare a quote for your project.</p><a class="button button-primary" href="https://wa.me/201111750034?text=Hi%20Aivengers%20AI%2C%20I%20want%20to%20start%20a%20video%20project." target="_blank" rel="noopener noreferrer">Start a WhatsApp conversation <span aria-hidden="true">↗</span></a>
+      <div class="wrap"><div class="contact-box"><p class="section-kicker" data-en="Have a project in mind?" data-ar="عندك مشروع في بالك؟">Have a project in mind?</p><h2 data-en="Let’s make something worth watching." data-ar="يلا نعمل حاجة تستاهل المشاهدة.">Let’s make something worth watching.</h2><p class="section-copy" data-en="Tell us what you’re creating and where you want it to live. We’ll discuss the right direction and prepare a quote for your project." data-ar="احكيلنا عن فكرتك والمنصة اللي هيتعرض عليها الفيديو. هنتناقش في الاتجاه المناسب ونجهز لك عرض سعر للمشروع.">Tell us what you’re creating and where you want it to live. We’ll discuss the right direction and prepare a quote for your project.</p><a class="button button-primary" href="#contact" data-wa="general" target="_blank" rel="noopener noreferrer"><span data-en="Start a WhatsApp conversation" data-ar="ابدأ محادثة على واتساب">Start a WhatsApp conversation</span> <span aria-hidden="true">↗</span></a>
           <div class="socials" aria-label="Social media"><a href="https://www.facebook.com/share/1Ad38VRw7m/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/aivengers.ai" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://youtube.com/@aivengersai-o4w" target="_blank" rel="noopener noreferrer">YouTube</a><a href="https://www.tiktok.com/@m.alisoba3" target="_blank" rel="noopener noreferrer">TikTok</a></div>
         </div></div>
     </section>
   </main>
 
-  <footer><div class="wrap footer-inner"><a class="footer-brand" href="#top">Aivengers AI</a><span>© 2026 Aivengers AI. All rights reserved.</span></div></footer>
+  <footer><div class="wrap footer-inner"><a class="footer-brand" href="#top">Aivengers AI</a><span data-en="© 2026 Aivengers AI. All rights reserved." data-ar="© 2026 Aivengers AI. جميع الحقوق محفوظة.">© 2026 Aivengers AI. All rights reserved.</span></div></footer>
+
+  <a class="wa-float" data-wa="general" target="_blank" rel="noopener noreferrer" href="#contact" data-attr="aria-label" data-en="Chat on WhatsApp" data-ar="تواصل معنا على واتساب" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M8.8 9.2c.2 2.6 3.1 5.3 6 6l1.2-1.3-2-1-.9.7c-.8-.4-1.7-1.3-2.1-2.1l.7-.9-1-2z" fill="currentColor" stroke="none"/></svg></a>
   <script>
-    (() => {
-      // Optional public Google Sheets CSV URL. Leave empty to show the current portfolio.
-      const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQncmHQmL924itXgb41_CunYe_o7PlnzJapiwjCI2um7EVI6KGlBLPULP0sf_HODSp1hyNNUfLQRjDF/pub?gid=0&single=true&output=csv";
-      const ANTEEL_FALLBACK = { visible: "yes", client_name: "مطعم العنتيل", title_en: "Al Anteel Restaurant Ad", title_ar: "إعلان مطعم العنتيل", category_en: "Real client project", category_ar: "عمل حقيقي لعميل", description_en: "A completed video project for Al Anteel Restaurant.", description_ar: "فيديو تم تنفيذه وتسليمه لمطعم العنتيل.", facebook_url: "https://www.facebook.com/reel/1109252104803509/", orientation: "vertical" };
-      const grid = document.querySelector("#work .work-grid");
-      if (!PORTFOLIO_CSV_URL || !grid) return;
+(() => {
+  "use strict";
 
-      function parseCSV(text) {
-        const rows = []; let row = [], cell = "", quoted = false;
-        for (let i = 0; i < text.length; i++) {
-          const c = text[i];
-          if (c === '"' && quoted && text[i + 1] === '"') { cell += '"'; i++; }
-          else if (c === '"') quoted = !quoted;
-          else if (c === "," && !quoted) { row.push(cell); cell = ""; }
-          else if ((c === "\n" || c === "\r") && !quoted) {
-            if (c === "\r" && text[i + 1] === "\n") i++;
-            row.push(cell); if (row.some(value => value.trim())) rows.push(row);
-            row = []; cell = "";
-          } else cell += c;
-        }
-        row.push(cell); if (row.some(value => value.trim())) rows.push(row);
-        const headers = (rows.shift() || []).map(value => value.trim().toLowerCase());
-        return rows.map(values => Object.fromEntries(headers.map((key, i) => [key, (values[i] || "").trim()])));
-      }
+  /* =====================  SETTINGS (edit here)  ===================== */
+  const WHATSAPP_NUMBER = "201111750034";
+  // Public "Publish to web > CSV" link of the Google Sheet. Leave "" to use only the built-in projects below.
+  const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQncmHQmL924itXgb41_CunYe_o7PlnzJapiwjCI2um7EVI6KGlBLPULP0sf_HODSp1hyNNUfLQRjDF/pub?gid=0&single=true&output=csv";
+  const LANG_KEY = "aivengers-site-language";
+  const CACHE_KEY = "aivengers-portfolio-sheet-v1";
+  const YES = /^(yes|true|1)$/i;
 
-      function safeFacebookUrl(value) {
-        try {
-          const url = new URL(value);
-          return ["facebook.com", "www.facebook.com", "m.facebook.com", "fb.watch"].includes(url.hostname.toLowerCase()) ? url.href : "";
-        } catch (_) { return ""; }
-      }
+  /* =====================  HELPERS  ===================== */
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const pair = (en, ar) => ({ en: en || ar || "", ar: ar || en || "" });
+  const store = {
+    get(key) { try { return localStorage.getItem(key); } catch (_) { return null; } },
+    set(key, value) { try { localStorage.setItem(key, value); } catch (_) { /* storage can be blocked */ } }
+  };
 
-      function showProjects(projects) {
-        const lang = document.documentElement.lang === "ar" ? "ar" : "en";
-        for (const item of projects) {
-          const videoUrl = safeFacebookUrl(item.facebook_url);
-          if (!videoUrl) continue;
-          const existing = [...grid.querySelectorAll(".project:not([data-sheet-project='true'])")]
-            .find(card => card.querySelector(".project-link")?.href === videoUrl);
-          if (existing) existing.hidden = !/^(yes|true|1)$/i.test(item.visible);
-        }
-        const visible = projects.filter(item => /^(yes|true|1)$/i.test(item.visible) && (item.title_en || item.title_ar) && safeFacebookUrl(item.facebook_url));
-        if (!visible.length) return;
-        grid.querySelectorAll("[data-sheet-project='true']").forEach(card => card.remove());
-        for (const item of visible) {
-          const videoUrl = safeFacebookUrl(item.facebook_url);
-          const isClientProject = /^(yes|true|1)$/i.test(item.real_client) || Boolean(item.client_name);
-          const existing = [...grid.querySelectorAll(".project:not([data-sheet-project='true'])")]
-            .find(card => card.querySelector(".project-link")?.href === videoUrl);
-          if (existing) {
-            existing.hidden = false;
-            const info = existing.querySelector(".project-info");
-            const frame = existing.querySelector(".video-frame");
-            const iframe = existing.querySelector("iframe");
-            const type = info?.querySelector(".project-type");
-            const title = info?.querySelector("h3");
-            const description = info?.querySelectorAll("p")?.[1];
-            const sheetTitle = item["title_" + lang] || item.title_en || item.title_ar;
-            const sheetCategory = item["category_" + lang] || item.category_en || item.category_ar;
-            const sheetDescription = item["description_" + lang] || item.description_en || item.description_ar;
-            if (sheetTitle) { if (title) title.textContent = sheetTitle; if (iframe) iframe.title = sheetTitle; }
-            if (sheetCategory && type) type.textContent = sheetCategory;
-            if (sheetDescription && description) description.textContent = sheetDescription;
-            if (frame) frame.classList.toggle("vertical", (item.orientation || "").toLowerCase() === "vertical");
-            info?.querySelector(".project-client-badge")?.remove();
-            if (isClientProject && info) {
-              const badge = document.createElement("span"); badge.className = "project-client-badge";
-              badge.textContent = lang === "ar" ? "مشروع منفّذ لعميل" : "Produced for a client";
-              if (item.client_name) badge.textContent += ": " + item.client_name;
-              badge.textContent = item.client_name
-                ? (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627 \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "One of our latest projects for " + item.client_name)
-                : (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627\u060c \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u0647 \u0644\u0639\u0645\u064a\u0644" : "One of our latest projects, completed and delivered for a client");
-              info.insertBefore(badge, info.firstChild);
-            }
-            continue;
-          }
-          const card = document.createElement("article"); card.className = "project"; card.dataset.sheetProject = "true";
-          const frame = document.createElement("div"); frame.className = "video-frame";
-          if ((item.orientation || "").toLowerCase() === "vertical") frame.classList.add("vertical");
-          const iframe = document.createElement("iframe");
-          iframe.title = item["title_" + lang] || item.title_en || item.title_ar;
-          iframe.src = "https://www.facebook.com/plugins/video.php?show_text=false&href=" + encodeURIComponent(videoUrl);
-          iframe.loading = "lazy"; iframe.allowFullscreen = true;
-          iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
-          iframe.referrerPolicy = "strict-origin-when-cross-origin"; frame.append(iframe);
-          const info = document.createElement("div"); info.className = "project-info";
-          const type = document.createElement("p"); type.className = "project-type"; type.textContent = item["category_" + lang] || item.category_en || "";
-          const title = document.createElement("h3"); title.textContent = item["title_" + lang] || item.title_en || item.title_ar;
-          const desc = document.createElement("p"); desc.textContent = item["description_" + lang] || item.description_en || (lang === "ar" ? "شاهد هذا الفيديو من أعمالنا." : "Watch this video from our portfolio.");
-          if (isClientProject) { const badge = document.createElement("span"); badge.className = "project-client-badge"; badge.textContent = lang === "ar" ? "مشروع منفّذ لعميل" : "Produced for a client"; badge.textContent = item.client_name ? (lang === "ar" ? "\u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "Completed and delivered for " + item.client_name) : (lang === "ar" ? "\u0639\u0645\u0644 \u062d\u0642\u064a\u0642\u064a \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u064ه \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0639\u0645\u064a\u0644" : "Completed and delivered for a real client"); info.append(badge); }
-          const clientBadge = info.querySelector(".project-client-badge");
-          if (clientBadge) clientBadge.textContent = item.client_name
-            ? (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627 \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "One of our latest projects for " + item.client_name)
-            : (lang === "ar" ? "\u0645\u0646 \u0623\u062d\u062f\u062b \u0623\u0639\u0645\u0627\u0644\u0646\u0627\u060c \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u0647 \u0644\u0639\u0645\u064a\u0644" : "One of our latest projects, completed and delivered for a client");
-          info.append(type, title, desc);
-          if (item.client_name) { const client = document.createElement("p"); client.className = "project-type"; client.textContent = (lang === "ar" ? "العميل: " : "Client: ") + item.client_name; info.append(client); }
-          if (clientBadge && item.client_name) {
-            const separateClientLine = [...info.querySelectorAll(".project-type")].find(node => node.textContent.endsWith(item.client_name));
-            separateClientLine?.remove();
-          }
-          const link = document.createElement("a"); link.className = "project-link"; link.href = videoUrl; link.target = "_blank"; link.rel = "noopener noreferrer";
-          link.textContent = lang === "ar" ? "شاهد العمل ↗" : "Watch project ↗";
-          info.append(link); card.append(frame, info); grid.append(card);
-        }
-      }
+  let lang = window.__lang === "en" ? "en" : "ar";
 
-      showProjects([ANTEEL_FALLBACK]);
-      fetch(PORTFOLIO_CSV_URL).then(response => { if (!response.ok) throw new Error("Sheet unavailable"); return response.text(); })
-        .then(parseCSV).then(projects => {
-          const hasAnteel = projects.some(item => /^(yes|true|1)$/i.test(item.visible) && (item.title_en || item.title_ar) && safeFacebookUrl(item.facebook_url).includes("1109252104803509"));
-          const displayProjects = hasAnteel ? projects : [...projects, ANTEEL_FALLBACK];
-          showProjects(displayProjects);
-          document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects(displayProjects), 0));
-          document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects(displayProjects), 0)));
-        }).catch(() => {
-          showProjects([ANTEEL_FALLBACK]);
-          document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects([ANTEEL_FALLBACK]), 0));
-          document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects([ANTEEL_FALLBACK]), 0)));
-        });
+  /* Creates an element whose text switches with the language. */
+  function t(tag, className, texts) {
+    const node = document.createElement(tag);
+    if (className) node.className = className;
+    node.dataset.en = texts.en;
+    node.dataset.ar = texts.ar;
+    node.textContent = texts[lang];
+    return node;
+  }
 
-      const durationSelect = document.getElementById("price-duration");
-      const formatSelect = document.getElementById("price-format");
-      const qualitySelect = document.getElementById("price-quality");
-      const qualityField = document.getElementById("quality-field");
-      const voiceSelect = document.getElementById("price-voiceover");
-      const priceOutput = document.getElementById("price-amount");
-      const priceSummary = document.getElementById("price-summary");
-      const priceContact = document.getElementById("price-contact");
-      function updatePrice() {
-        if (!durationSelect || !formatSelect || !qualitySelect || !voiceSelect || !priceOutput) return;
-        const language = document.documentElement.lang === "ar" ? "ar" : "en";
-        const duration = Number(durationSelect.value);
-        const isCartoon = formatSelect.value === "cartoon";
-        qualityField.hidden = isCartoon;
-        if (isCartoon) { voiceSelect.value = "no"; voiceSelect.disabled = true; }
-        else voiceSelect.disabled = false;
-        const factor = duration / 30;
-        const basePrice = isCartoon ? 500 : qualitySelect.value === "lower" ? 600 : 1200;
-        const voiceFee = !isCartoon && voiceSelect.value === "yes" ? 50 : 0;
-        const total = Math.round((basePrice + voiceFee) * factor);
-        const money = language === "ar" ? `${total.toLocaleString("en-EG")} جنيه` : `EGP ${total.toLocaleString("en-US")}`;
-        const formatName = formatSelect.selectedOptions[0].dataset.bilingual.split("|")[language === "ar" ? 1 : 0];
-        const qualityName = qualitySelect.selectedOptions[0].dataset.bilingual.split("|")[language === "ar" ? 1 : 0];
-        const voiceName = voiceSelect.value === "yes" ? (language === "ar" ? "مع تعليق صوتي" : "with voice-over") : (language === "ar" ? "من غير تعليق صوتي" : "no voice-over");
-        priceOutput.textContent = money;
-        priceSummary.textContent = language === "ar"
-          ? `${duration} ثانية · ${formatName}${isCartoon ? "" : " · " + qualityName} · ${voiceName}`
-          : `${duration} seconds · ${formatName}${isCartoon ? "" : " · " + qualityName} · ${voiceName}`;
-        const message = language === "ar"
-          ? `مرحبًا Aivengers AI، أريد عرض سعر لفيديو ${duration} ثانية، نوعه ${formatName}${isCartoon ? "" : "، " + qualityName}، ${voiceName}. السعر التقديري على الموقع: ${money}.`
-          : `Hi Aivengers AI, please quote a ${duration}-second ${formatName}${isCartoon ? "" : " at " + qualityName} ${voiceName} video. Website estimate: ${money}.`;
-        priceContact.href = `https://wa.me/201111750034?text=${encodeURIComponent(message)}`;
-      }
-      [durationSelect, formatSelect, qualitySelect, voiceSelect].forEach(control => control?.addEventListener("change", updatePrice));
-      document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(updatePrice, 0));
-      document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(updatePrice, 0)));
-      updatePrice();
-    })();
-  </script>
-  <script>
-    (() => {
-      const languageModal = document.getElementById("language-modal");
-      const introModal = document.getElementById("intro-modal");
-      const languageKey = "aivengers-site-language";
-      const dictionary = new Map();
-      const pairs = [
-        ["Let's talk", "خلينا نتكلم"], ["Start a project", "ابدأ مشروعك"], ["Explore our work", "شاهد أعمالنا"],
-        ["Cinematic chocolate product advertisement", "إعلان سينمائي لمنتج الشوكولاتة"], ["Dessert shop commercial", "إعلان متجر حلويات"],
-        ["Mini Runner Market AI commercial", "إعلان عدّاءة السوق بالذكاء الاصطناعي"], ["Premium nuts roastery advertisement", "إعلان محمصة مكسرات مميزة"],
-        ["Cinematic action scene showcase", "عرض مشهد حركة سينمائي"], ["Animated character stories", "حكايات شخصيات كرتونية"],
-        ["Selected projects", "أعمال مختارة"], ["Made to be remembered.", "أعمال تفضل في الذاكرة."],
-        ["A selection of cinematic AI commercials, product films, action scenes, and animated stories.", "مجموعة مختارة من الإعلانات السينمائية بالذكاء الاصطناعي وأفلام المنتجات ومشاهد الحركة والحكايات الكرتونية."],
-        ["More work on Facebook", "شاهد المزيد على فيسبوك"], ["AI product commercial", "إعلان منتج بالذكاء الاصطناعي"],
-        ["Cinematic Chocolate Product Ad", "إعلان شوكولاتة سينمائي"], ["Premium Nuts Roastery Ad", "إعلان محمصة المكسرات المميزة"], ["A premium, cinematic presentation for a chocolate product.", "عرض سينمائي مميز لمنتج شوكولاتة."],
-        ["Watch project", "شاهد العمل"], ["AI food commercial", "إعلان طعام بالذكاء الاصطناعي"],
-        ["Dessert Shop Commercial", "إعلان متجر حلويات"], ["A cinematic ad designed to make every product look irresistible.", "إعلان سينمائي يبرز منتجات المتجر بشكل جذاب."],
-        ["AI cinematic commercial", "إعلان سينمائي بالذكاء الاصطناعي"], ["Mini Runner Market Ad", "إعلان عدّاءة السوق"],
-        ["A playful parkour chase through a bustling market, created for social video.", "مطاردة باركور مرحة وسط سوق مزدحم، مصممة لفيديوهات السوشيال ميديا."],
-        ["A rich visual story focused on freshness, flavor, and product appeal.", "حكاية بصرية غنية تبرز الانتعاش والطعم وجاذبية المنتج."],
-        ["Cinematic action sequence", "مشهد حركة سينمائي"], ["Action Scene Showcase", "عرض مشهد حركة"],
-        ["Dynamic movement and dramatic visuals shaped into a cinematic sequence.", "حركة سريعة ومشاهد درامية في تسلسل سينمائي."],
-        ["AI cartoon series", "سلسلة كرتونية بالذكاء الاصطناعي"], ["Animated Character Stories", "حكايات شخصيات كرتونية"],
-        ["Original characters brought to life through short, entertaining stories.", "شخصيات أصلية تدب فيها الحياة من خلال حكايات قصيرة وممتعة."],
-        ["What we do", "خدماتنا"], ["One studio. Many ways to tell a story.", "استوديو واحد.. وحكايات بأشكال مختلفة."],
-        ["Creative video production for brands, businesses, restaurants, real estate, creators, and social campaigns.", "إنتاج فيديو إبداعي للعلامات التجارية والشركات والمطاعم والعقارات وصنّاع المحتوى وحملات السوشيال ميديا."],
-        ["AI Video Production", "إنتاج فيديو بالذكاء الاصطناعي"], ["Cinematic AI-generated visuals for modern brands and digital campaigns.", "مشاهد سينمائية مولّدة بالذكاء الاصطناعي للعلامات التجارية والحملات الرقمية."],
-        ["Real Video Production", "إنتاج وتصوير حقيقي"], ["On-location shooting and production for businesses and social content.", "تصوير وإنتاج في مواقع العمل للشركات ومحتوى السوشيال ميديا."],
-        ["Product Commercials", "إعلانات المنتجات"], ["Polished product films built to catch attention and communicate value.", "أفلام منتجات متقنة تلفت الانتباه وتوضح قيمة المنتج."],
-        ["Social Media Ads", "إعلانات السوشيال ميديا"], ["Short-form videos for Facebook, Instagram, TikTok, and YouTube.", "فيديوهات قصيرة لفيسبوك وإنستغرام وتيك توك ويوتيوب."],
-        ["Cinematic Editing", "مونتاج سينمائي"], ["Story, pacing, sound, and finishing shaped into a cohesive film.", "قصة وإيقاع وصوت ولمسات نهائية متناسقة في فيديو واحد."],
-        ["Creative Concepts", "أفكار إبداعية"], ["Fresh ideas and visual directions tailored to each project.", "أفكار ورؤى بصرية جديدة تناسب كل مشروع."],
-        ["A creative video studio combining new visual tools with real-world production.", "استوديو فيديو إبداعي يجمع بين أدوات الصورة الحديثة والإنتاج الواقعي."],
-        ["About Aivengers AI", "عن Aivengers AI"], ["Big ideas deserve a bold screen presence.", "الأفكار الكبيرة تستحق حضورًا قويًا على الشاشة."],
-        ["Aivengers AI is a creative video production studio focused on cinematic AI videos, real productions, and high-impact visual content for brands and businesses.", "Aivengers AI استوديو إبداعي لإنتاج الفيديو، متخصص في الفيديوهات السينمائية بالذكاء الاصطناعي والإنتاج الحقيقي والمحتوى البصري المؤثر للعلامات التجارية والشركات."],
-        ["From the first concept to the final edit, we shape each project around its message, audience, and platform.", "من أول فكرة لحد المونتاج النهائي، بنصمم كل مشروع بما يناسب رسالته وجمهوره والمنصة اللي هيتعرض عليها."],
-        ["Tell us about your project", "احكيلنا عن مشروعك"], ["Why Aivengers", "لماذا Aivengers؟"],
-        ["Creative thinking, finished with care.", "فكرة مبدعة وتنفيذ متقن."], ["Clear creative direction", "رؤية إبداعية واضحة"],
-        ["Every video starts with an idea shaped around the project.", "كل فيديو بيبدأ بفكرة مصممة خصيصًا للمشروع."],
-        ["AI + real production", "ذكاء اصطناعي وإنتاج حقيقي"],
-        ["We combine AI visuals and real production when the brief calls for it.", "بنجمع بين مشاهد الذكاء الاصطناعي والإنتاج الحقيقي حسب احتياج المشروع."],
-        ["Made for the platform", "مصمم للمنصة"], ["Format and pacing are considered for where the video will be seen.", "بنراعي شكل الفيديو وإيقاعه حسب المنصة اللي هيتعرض عليها."],
-        ["Polished storytelling", "حكاية متقنة"], ["Visuals, editing, music, and sound work together as one story.", "الصورة والمونتاج والموسيقى والصوت بيشتغلوا مع بعض كحكاية واحدة."],
-        ["Have a project in mind?", "عندك مشروع في بالك؟"], ["Let's make something worth watching.", "يلا نعمل حاجة تستاهل المشاهدة."],
-        ["Tell us what you're creating and where you want it to live. We'll discuss the right direction and prepare a quote for your project.", "احكيلنا عن فكرتك والمنصة اللي هيتعرض عليها الفيديو. هنتناقش في الاتجاه المناسب ونجهز لك عرض سعر للمشروع."],
-        ["Start a WhatsApp conversation", "ابدأ محادثة على واتساب"], ["© 2026 Aivengers AI. All rights reserved.", "© 2026 Aivengers AI. جميع الحقوق محفوظة."], ["All rights reserved.", "جميع الحقوق محفوظة."],
-        ["Cinematic AI videos and real video production for brands, creators, and businesses ready to stand out.", "فيديوهات سينمائية بالذكاء الاصطناعي وإنتاج فيديو حقيقي للعلامات التجارية وصنّاع المحتوى والشركات اللي عايزة تتميز."],
-        ["Stories that make people", "قصص تخلي الناس"], ["stop scrolling.", "توقف التمرير."],
-        ["AI-powered visuals", "مشاهد بالذكاء الاصطناعي"], ["Real production", "تصوير وإنتاج حقيقي"],
-        ["Social-first storytelling", "قصص مناسبة للسوشيال ميديا"], ["Cinematic AI studio", "استوديو فيديو سينمائي بالذكاء الاصطناعي"],
-        ["A quick introduction", "نبذة سريعة"], ["Who we are", "من نحن"],
-        ["Aivengers AI is a creative video production studio. We create cinematic AI videos and real productions for brands, businesses, and creators.", "Aivengers AI استوديو إبداعي لإنتاج الفيديو. بنصنع فيديوهات سينمائية بالذكاء الاصطناعي وإنتاجات حقيقية للعلامات التجارية والشركات وصنّاع المحتوى."]
-      ];
-      for (const [english, arabic] of pairs) { dictionary.set(english, { en: english, ar: arabic }); dictionary.set(arabic, { en: english, ar: arabic }); }
-      for (const element of document.querySelectorAll("[data-bilingual]")) {
-        const [english, arabic] = element.dataset.bilingual.split("|");
-        if (english && arabic) { dictionary.set(english, { en: english, ar: arabic }); dictionary.set(arabic, { en: english, ar: arabic }); }
-      }
-      const teamTitle = { en: "Meet the creative team", ar: "فريقنا الإبداعي" };
-      const teamIntro = {
-        en: "We specialize in product commercials and creative concepts. Our team includes an assistant director, a director of photography, and an editing team. We also offer real-world filming, including tabletop photography: carefully arranged and lit product shots on a table or small set to highlight details and textures. We combine live-action and AI video to fit each project.",
-        ar: "إحنا فريق متخصص في إعلانات المنتجات والأفكار الإبداعية، وبيضم مساعد مخرج ومدير تصوير وفريق مونتاج. بنقدم كمان تصويرًا حقيقيًا، ومنه تصوير الـTabletop: تصوير المنتج على سطح أو طاولة بإضاءة وترتيب مدروسين لإبراز تفاصيله وخاماته. وبنستخدم التصوير الحقيقي أو الذكاء الاصطناعي أو نمزج بينهم حسب كل مشروع."
+  function whatsappLink(message) {
+    return "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+  }
+
+  /* =====================  VIDEO LINKS  ===================== */
+  function parseVideo(value) {
+    let u;
+    try { u = new URL(String(value || "").trim()); } catch (_) { return null; }
+    if (u.protocol !== "https:") return null;
+    const host = u.hostname.toLowerCase().replace(/^(www|m|web)\./, "");
+
+    if (host === "facebook.com" || host === "fb.watch") {
+      const m = u.pathname.match(/\/(?:reel|videos?)\/(\d+)/);
+      const id = m ? m[1] : u.searchParams.get("v");
+      return {
+        key: id ? "fb:" + id : "fb:" + u.origin + u.pathname,
+        url: u.href,
+        embed: "https://www.facebook.com/plugins/video.php?show_text=false&autoplay=true&href=" + encodeURIComponent(u.href)
       };
-      const previousIntro = "Aivengers AI is a creative video production studio. We create cinematic AI videos and real productions for brands, businesses, and creators.";
-      const previousAbout = "Aivengers AI is a creative video production studio focused on cinematic AI videos, real productions, and high-impact visual content for brands and businesses.";
-      for (const [oldText, replacement] of [["Who we are", teamTitle], [previousIntro, teamIntro], [previousAbout, teamIntro]]) {
-        dictionary.set(oldText, replacement);
-        dictionary.set(replacement.en, replacement);
-        dictionary.set(replacement.ar, replacement);
+    }
+
+    let ytId = "";
+    if (host === "youtu.be") ytId = u.pathname.slice(1).split("/")[0];
+    else if (host === "youtube.com") {
+      ytId = u.searchParams.get("v") || ((u.pathname.match(/^\/(?:shorts|embed)\/([\w-]{11})/) || [])[1] || "");
+    }
+    if (/^[\w-]{11}$/.test(ytId)) {
+      return {
+        key: "yt:" + ytId,
+        url: u.href,
+        embed: "https://www.youtube-nocookie.com/embed/" + ytId + "?autoplay=1&rel=0",
+        thumb: "https://i.ytimg.com/vi/" + ytId + "/hqdefault.jpg",
+        vertical: /\/shorts\//.test(u.pathname)
+      };
+    }
+    return null;
+  }
+
+  function parseThumb(value) {
+    const v = String(value || "").trim();
+    if (/^https:\/\//i.test(v)) return v;
+    if (/^[\w\-./]+\.(jpe?g|png|webp|avif)$/i.test(v)) return v; // image inside the repo, e.g. thumbs/chocolate.jpg
+    return "";
+  }
+
+  /* =====================  BUILT-IN PROJECTS  ===================== */
+  const reel = id => "https://www.facebook.com/reel/" + id + "/";
+  const RAW_DEFAULTS = [
+    { url: reel("1081454844385721"), vertical: true,
+      type: pair("AI product commercial", "إعلان منتج بالذكاء الاصطناعي"),
+      title: pair("Cinematic Chocolate Product Ad", "إعلان شوكولاتة سينمائي"),
+      desc: pair("A premium, cinematic presentation for a chocolate product.", "عرض سينمائي مميز لمنتج شوكولاتة.") },
+    { url: reel("2118001358852939"), vertical: true,
+      client: pair("Helwan El-Halmia Patisserie", "حلواني الحلمية"),
+      type: pair("AI food commercial", "إعلان طعام بالذكاء الاصطناعي"),
+      title: pair("Dessert Shop Commercial", "إعلان متجر حلويات"),
+      desc: pair("A cinematic ad designed to make every product look irresistible.", "إعلان سينمائي يبرز منتجات المتجر بشكل جذاب.") },
+    { url: reel("1109252104803509"), vertical: true,
+      client: pair("Al Anteel Restaurant", "مطعم العنتيل"),
+      type: pair("Real client project", "عمل حقيقي لعميل"),
+      title: pair("Al Anteel Restaurant Ad", "إعلان مطعم العنتيل"),
+      desc: pair("A completed video project for Al Anteel Restaurant.", "فيديو تم تنفيذه وتسليمه لمطعم العنتيل.") },
+    { url: reel("1056300057368949"), vertical: true,
+      type: pair("AI cinematic commercial", "إعلان سينمائي بالذكاء الاصطناعي"),
+      title: pair("Mini Runner Market Ad", "إعلان عدّاءة السوق"),
+      desc: pair("A playful parkour chase through a bustling market, created for social video.", "مطاردة باركور مرحة وسط سوق مزدحم، مصممة لفيديوهات السوشيال ميديا.") },
+    { url: reel("27655261734151071"), vertical: false,
+      type: pair("AI food commercial", "إعلان طعام بالذكاء الاصطناعي"),
+      title: pair("Premium Nuts Roastery Ad", "إعلان محمصة المكسرات المميزة"),
+      desc: pair("A rich visual story focused on freshness, flavor, and product appeal.", "حكاية بصرية غنية تبرز الانتعاش والطعم وجاذبية المنتج.") },
+    { url: reel("3674169399412917"), vertical: false,
+      type: pair("Cinematic action sequence", "مشهد حركة سينمائي"),
+      title: pair("Action Scene Showcase", "عرض مشهد حركة"),
+      desc: pair("Dynamic movement and dramatic visuals shaped into a cinematic sequence.", "حركة سريعة ومشاهد درامية في تسلسل سينمائي.") },
+    { url: reel("1363147695804228"), vertical: true,
+      type: pair("AI cartoon series", "سلسلة كرتونية بالذكاء الاصطناعي"),
+      title: pair("Animated Character Stories", "حكايات شخصيات كرتونية"),
+      desc: pair("Original characters brought to life through short, entertaining stories.", "شخصيات أصلية تدب فيها الحياة من خلال حكايات قصيرة وممتعة.") }
+  ];
+
+  function buildProject(fields) {
+    const video = parseVideo(fields.url);
+    if (!video) return null;
+    return {
+      key: video.key,
+      url: video.url,
+      embed: video.embed,
+      thumb: parseThumb(fields.thumb) || video.thumb || "",
+      vertical: fields.vertical != null ? fields.vertical : (video.vertical || false),
+      hidden: false,
+      realClient: !!fields.realClient,
+      client: fields.client || null,
+      type: fields.type || pair("", ""),
+      title: fields.title,
+      desc: fields.desc
+    };
+  }
+
+  const DEFAULTS = RAW_DEFAULTS.map(buildProject).filter(Boolean);
+
+  /* =====================  GOOGLE SHEET  ===================== */
+  function parseCSV(text) {
+    text = String(text || "").replace(/^\uFEFF/, "");
+    const rows = [];
+    let row = [], cell = "", quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (c === '"' && quoted && text[i + 1] === '"') { cell += '"'; i++; }
+      else if (c === '"') quoted = !quoted;
+      else if (c === "," && !quoted) { row.push(cell); cell = ""; }
+      else if ((c === "\n" || c === "\r") && !quoted) {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(cell);
+        if (row.some(v => v.trim())) rows.push(row);
+        row = []; cell = "";
+      } else cell += c;
+    }
+    row.push(cell);
+    if (row.some(v => v.trim())) rows.push(row);
+    const headers = (rows.shift() || []).map(v => v.trim().toLowerCase());
+    return rows.map(values => Object.fromEntries(headers.map((key, i) => [key, (values[i] || "").trim()])));
+  }
+
+  /* Sheet columns: visible, title_en, title_ar, category_en, category_ar, description_en, description_ar,
+     facebook_url (or video_url), orientation, client_name, real_client, thumbnail_url */
+  function mergeSheet(rows) {
+    const list = DEFAULTS.map(p => Object.assign({}, p));
+    rows.forEach((row, index) => {
+      const line = index + 2; // spreadsheet row number (row 1 is the header)
+      const link = row.video_url || row.facebook_url || "";
+      if (!link) return;
+      const video = parseVideo(link);
+      if (!video) { console.warn("[portfolio] row " + line + ": link not supported (use a Facebook reel/video or YouTube link):", link); return; }
+      const visible = YES.test(row.visible);
+      const hasTitle = !!(row.title_en || row.title_ar);
+      const existing = list.find(p => p.key === video.key);
+
+      if (existing) {
+        existing.hidden = !visible;
+        if (!visible) return;
+        if (hasTitle) existing.title = pair(row.title_en, row.title_ar);
+        if (row.category_en || row.category_ar) existing.type = pair(row.category_en, row.category_ar);
+        if (row.description_en || row.description_ar) existing.desc = pair(row.description_en, row.description_ar);
+        if (row.orientation) existing.vertical = row.orientation.toLowerCase() === "vertical";
+        if (row.client_name) existing.client = pair(row.client_name, row.client_name);
+        if (row.real_client) existing.realClient = YES.test(row.real_client);
+        const thumb = parseThumb(row.thumbnail_url);
+        if (thumb) existing.thumb = thumb;
+        return;
       }
 
-      function applyLanguage(language) {
-        const isArabic = language === "ar";
-        document.documentElement.lang = language;
-        document.documentElement.dir = isArabic ? "rtl" : "ltr";
-        document.title = isArabic ? "Aivengers AI - استوديو فيديو سينمائي" : "Aivengers AI - Cinematic video studio";
-        document.querySelector('meta[name="description"]').content = isArabic
-          ? "Aivengers AI استوديو لإنتاج الفيديوهات السينمائية بالذكاء الاصطناعي والإنتاج الحقيقي للعلامات التجارية والشركات."
-          : "Aivengers AI creates cinematic AI videos, real video productions, and social-first commercials for brands and businesses.";
-        document.querySelector('meta[property="og:title"]').content = document.title;
-        document.querySelector('meta[property="og:description"]').content = isArabic
-          ? "إنتاج فيديو سينمائي بالذكاء الاصطناعي وتصوير حقيقي للعلامات التجارية وصنّاع المحتوى والشركات."
-          : "Cinematic AI and real video production for brands, creators, and businesses.";
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-        while (walker.nextNode()) {
-          const node = walker.currentNode;
-          const value = node.nodeValue.trim();
-          const translation = dictionary.get(value);
-          if (translation) node.nodeValue = node.nodeValue.replace(value, translation[language]);
-        }
-        for (const element of document.querySelectorAll("[title]")) {
-          const translation = dictionary.get(element.title.trim());
-          if (translation) element.title = translation[language];
-        }
-        document.getElementById("language-toggle").textContent = isArabic ? "EN" : "عربي";
-        document.getElementById("language-toggle").setAttribute("aria-label", isArabic ? "تغيير اللغة" : "Change language");
-        document.querySelector(".nav-links").setAttribute("aria-label", isArabic ? "القائمة الرئيسية" : "Main navigation");
-        document.querySelector(".hero-note").setAttribute("aria-label", isArabic ? "خدمات الاستوديو" : "Studio capabilities");
-        try { localStorage.setItem(languageKey, language); } catch (_) {}
-      }
-
-      document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => {
-        const language = button.dataset.language;
-        applyLanguage(language);
-        languageModal.hidden = true;
-        introModal.hidden = false;
-      }));
-      document.getElementById("intro-continue").addEventListener("click", () => {
-        introModal.hidden = true;
-        document.body.classList.remove("modal-open");
-        document.getElementById("work").scrollIntoView({ behavior: "smooth" });
+      if (!visible) return;
+      if (!hasTitle) { console.warn("[portfolio] row " + line + ": needs title_en or title_ar to be shown."); return; }
+      const project = buildProject({
+        url: link,
+        vertical: row.orientation ? row.orientation.toLowerCase() === "vertical" : undefined,
+        thumb: row.thumbnail_url,
+        realClient: YES.test(row.real_client),
+        client: row.client_name ? pair(row.client_name, row.client_name) : null,
+        type: pair(row.category_en, row.category_ar),
+        title: pair(row.title_en, row.title_ar),
+        desc: pair(row.description_en || "Watch this video from our portfolio.", row.description_ar || "شاهد هذا الفيديو من أعمالنا.")
       });
-      document.getElementById("language-toggle").addEventListener("click", () => {
-        const next = document.documentElement.lang === "ar" ? "en" : "ar";
-        applyLanguage(next);
-      });
+      if (project) list.push(project);
+    });
+    return list;
+  }
 
-      let savedLanguage = "";
-      try { savedLanguage = localStorage.getItem(languageKey) || ""; } catch (_) {}
-      if (savedLanguage === "ar" || savedLanguage === "en") applyLanguage(savedLanguage);
-      document.body.classList.add("modal-open");
-    })();
+  /* =====================  RENDER PORTFOLIO  ===================== */
+  const grid = $("#work-grid");
+  const clientStrip = $("#client-strip");
+  let signature = "";
+
+  function badgeTexts(p) {
+    if (p.client) {
+      return {
+        en: "One of our latest projects for " + p.client.en,
+        ar: "من أحدث أعمالنا للعميل: " + p.client.ar
+      };
+    }
+    return {
+      en: "One of our latest projects, completed and delivered for a client",
+      ar: "من أحدث أعمالنا، تم تنفيذه وتسليمه لعميل"
+    };
+  }
+
+  function createCard(p) {
+    const card = document.createElement("article");
+    card.className = "project";
+
+    const frame = document.createElement("div");
+    frame.className = "video-frame" + (p.vertical ? " vertical" : "");
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "video-facade";
+    if (p.thumb) {
+      const img = new Image();
+      img.src = p.thumb; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+      img.addEventListener("error", () => img.remove());
+      button.append(img);
+    }
+    const play = document.createElement("span");
+    play.className = "play-icon";
+    play.setAttribute("aria-hidden", "true");
+    play.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+    button.append(play, t("span", "video-hint", { en: "Tap to play", ar: "اضغط للتشغيل" }));
+    frame.append(button);
+
+    const info = document.createElement("div");
+    info.className = "project-info";
+    if (p.client || p.realClient) info.append(t("span", "project-client-badge", badgeTexts(p)));
+    if (p.type.en || p.type.ar) info.append(t("p", "project-type", p.type));
+    const heading = t("h3", "", p.title);
+    info.append(heading, t("p", "project-desc", p.desc));
+
+    const link = document.createElement("a");
+    link.className = "project-link";
+    link.href = p.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    const arrow = document.createElement("span");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "↗";
+    link.append(t("span", "", { en: "Watch project", ar: "شاهد العمل" }), " ", arrow);
+    info.append(link);
+
+    /* The heavy video player is only loaded when the visitor taps play. */
+    button.addEventListener("click", () => {
+      const iframe = document.createElement("iframe");
+      iframe.src = p.embed;
+      iframe.title = heading.textContent;
+      iframe.allowFullscreen = true;
+      iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.replaceChildren(iframe);
+    });
+
+    card.append(frame, info);
+    return card;
+  }
+
+  function syncFacadeLabels() {
+    $$(".project").forEach(card => {
+      const button = $(".video-facade", card);
+      const heading = $("h3", card);
+      if (button && heading) button.setAttribute("aria-label", (lang === "ar" ? "تشغيل الفيديو: " : "Play video: ") + heading.textContent);
+    });
+  }
+
+  function renderClients(visible) {
+    const seen = new Set();
+    const clients = [];
+    visible.forEach(p => {
+      if (p.client && !seen.has(p.client.en)) { seen.add(p.client.en); clients.push(p.client); }
+    });
+    clientStrip.replaceChildren();
+    if (!clients.length) { clientStrip.hidden = true; return; }
+    clientStrip.append(t("li", "client-label", { en: "Recent clients:", ar: "عملاء حديثون:" }));
+    clients.forEach(c => clientStrip.append(t("li", "", c)));
+    clientStrip.hidden = false;
+  }
+
+  function render(list) {
+    const visible = list.filter(p => !p.hidden);
+    const next = JSON.stringify(visible);
+    if (next === signature) return; // nothing changed: don't reset a video that is already playing
+    signature = next;
+    grid.replaceChildren(...visible.map(createCard));
+    renderClients(visible);
+    syncFacadeLabels();
+  }
+
+  async function refreshFromSheet() {
+    if (!PORTFOLIO_CSV_URL) return;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch(PORTFOLIO_CSV_URL, { signal: controller.signal });
+      if (!response.ok) throw new Error("HTTP " + response.status);
+      const rows = parseCSV(await response.text());
+      store.set(CACHE_KEY, JSON.stringify(rows));
+      render(mergeSheet(rows));
+    } catch (error) {
+      console.warn("[portfolio] Could not read the Google Sheet; showing saved/built-in projects.", error);
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  /* =====================  PRICING  ===================== */
+  const durationSelect = $("#price-duration");
+  const formatSelect = $("#price-format");
+  const qualitySelect = $("#price-quality");
+  const qualityField = $("#quality-field");
+  const voiceSelect = $("#price-voiceover");
+  const priceOutput = $("#price-amount");
+  const priceSummary = $("#price-summary");
+  const priceContact = $("#price-contact");
+
+  function updatePrice() {
+    const duration = Number(durationSelect.value);
+    const isCartoon = formatSelect.value === "cartoon";
+    qualityField.hidden = isCartoon;
+    if (isCartoon) { voiceSelect.value = "no"; voiceSelect.disabled = true; }
+    else voiceSelect.disabled = false;
+
+    const factor = duration / 30;
+    const basePrice = isCartoon ? 500 : (qualitySelect.value === "lower" ? 600 : 1200);
+    const voiceFee = !isCartoon && voiceSelect.value === "yes" ? 50 : 0;
+    const total = Math.round((basePrice + voiceFee) * factor);
+
+    const money = lang === "ar" ? total.toLocaleString("en-EG") + " جنيه" : "EGP " + total.toLocaleString("en-US");
+    const formatName = formatSelect.selectedOptions[0].dataset[lang];
+    const qualityName = qualitySelect.selectedOptions[0].dataset[lang];
+    const voiceName = voiceSelect.value === "yes"
+      ? (lang === "ar" ? "مع تعليق صوتي" : "with voice-over")
+      : (lang === "ar" ? "من غير تعليق صوتي" : "no voice-over");
+
+    priceOutput.textContent = money;
+    priceSummary.textContent = lang === "ar"
+      ? duration + " ثانية · " + formatName + (isCartoon ? "" : " · " + qualityName) + " · " + voiceName
+      : duration + " seconds · " + formatName + (isCartoon ? "" : " · " + qualityName) + " · " + voiceName;
+
+    const message = lang === "ar"
+      ? "مرحبًا Aivengers AI، أريد عرض سعر لفيديو " + duration + " ثانية، نوعه " + formatName + (isCartoon ? "" : "، " + qualityName) + "، " + voiceName + ". السعر التقديري على الموقع: " + money + "."
+      : "Hi Aivengers AI, please quote a " + duration + "-second " + formatName + (isCartoon ? "" : " at " + qualityName) + " " + voiceName + " video. Website estimate: " + money + ".";
+    priceContact.href = whatsappLink(message);
+  }
+  [durationSelect, formatSelect, qualitySelect, voiceSelect].forEach(control => control.addEventListener("change", updatePrice));
+
+  /* =====================  LANGUAGE  ===================== */
+  const META = {
+    en: {
+      title: "Aivengers AI — Cinematic video studio",
+      description: "Aivengers AI creates cinematic AI videos, real video productions, and social-first commercials for brands and businesses.",
+      og: "Cinematic AI and real video production for brands, creators, and businesses."
+    },
+    ar: {
+      title: "Aivengers AI — استوديو فيديو سينمائي",
+      description: "Aivengers AI استوديو لإنتاج الفيديوهات السينمائية بالذكاء الاصطناعي والإنتاج الحقيقي للعلامات التجارية والشركات.",
+      og: "إنتاج فيديو سينمائي بالذكاء الاصطناعي وتصوير حقيقي للعلامات التجارية وصنّاع المحتوى والشركات."
+    }
+  };
+
+  function refreshWhatsAppLinks() {
+    const message = lang === "ar" ? "أهلاً Aivengers AI، عايز أبدأ مشروع فيديو." : "Hi Aivengers AI, I want to start a video project.";
+    $$('[data-wa="general"]').forEach(link => { link.href = whatsappLink(message); });
+  }
+
+  function applyLanguage(next, persist) {
+    lang = next === "en" ? "en" : "ar";
+    const root = document.documentElement;
+    root.lang = lang;
+    root.dir = lang === "ar" ? "rtl" : "ltr";
+
+    document.title = META[lang].title;
+    const description = $('meta[name="description"]');
+    if (description) description.content = META[lang].description;
+    const ogTitle = $('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = META[lang].title;
+    const ogDescription = $('meta[property="og:description"]');
+    if (ogDescription) ogDescription.content = META[lang].og;
+
+    $$("[data-en]").forEach(node => {
+      const value = node.dataset[lang] || node.dataset.en;
+      if (node.dataset.attr) node.setAttribute(node.dataset.attr, value);
+      else node.textContent = value;
+    });
+
+    syncFacadeLabels();
+    refreshWhatsAppLinks();
+    updatePrice();
+    if (persist) store.set(LANG_KEY, lang);
+  }
+
+  $("#language-toggle").addEventListener("click", () => applyLanguage(lang === "ar" ? "en" : "ar", true));
+
+  /* =====================  MOBILE MENU  ===================== */
+  const menu = $("#nav-menu");
+  const menuButton = $("#menu-toggle");
+  function setMenu(open) {
+    menu.classList.toggle("open", open);
+    menuButton.setAttribute("aria-expanded", String(open));
+  }
+  menuButton.addEventListener("click", () => setMenu(!menu.classList.contains("open")));
+  menu.addEventListener("click", event => { if (event.target.closest("a")) setMenu(false); });
+  document.addEventListener("keydown", event => { if (event.key === "Escape") setMenu(false); });
+  document.addEventListener("click", event => { if (!event.target.closest(".topbar")) setMenu(false); });
+  window.matchMedia("(min-width: 821px)").addEventListener("change", event => { if (event.matches) setMenu(false); });
+
+  /* =====================  START  ===================== */
+  let cachedRows = [];
+  try {
+    const parsed = JSON.parse(store.get(CACHE_KEY) || "[]");
+    if (Array.isArray(parsed)) cachedRows = parsed;
+  } catch (_) { /* ignore a broken cache */ }
+
+  render(mergeSheet(cachedRows));   // built-in projects + last known sheet: shown immediately, no layout jump
+  applyLanguage(lang, false);
+  refreshFromSheet();               // then quietly update from the live sheet
+})();
+
   </script>
 </body>
 </html>
