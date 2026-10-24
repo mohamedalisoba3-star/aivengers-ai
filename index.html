@@ -256,6 +256,10 @@
             <div class="project-info"><span class="project-client-badge" data-bilingual="One of our latest projects for Helwan El-Halmia Patisserie|من أحدث أعمالنا لحلواني الحلمية">من أحدث أعمالنا لحلواني الحلمية</span><p class="project-type">AI food commercial</p><h3>Dessert Shop Commercial</h3><p>A cinematic ad designed to make every product look irresistible.</p><a class="project-link" href="https://www.facebook.com/reel/2118001358852939/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
           </article>
           <article class="project">
+            <div class="video-frame vertical"><iframe title="Al Anteel Restaurant Ad" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1109252104803509%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+            <div class="project-info"><span class="project-client-badge" data-bilingual="One of our latest projects for Al Anteel Restaurant|من أحدث أعمالنا لمطعم العنتيل">من أحدث أعمالنا لمطعم العنتيل</span><p class="project-type" data-bilingual="Real client project|عمل حقيقي لعميل">عمل حقيقي لعميل</p><h3 data-bilingual="Al Anteel Restaurant Ad|إعلان مطعم العنتيل">إعلان مطعم العنتيل</h3><p data-bilingual="A completed video project for Al Anteel Restaurant.|فيديو تم تنفيذه وتسليمه لمطعم العنتيل.">فيديو تم تنفيذه وتسليمه لمطعم العنتيل.</p><a class="project-link" href="https://www.facebook.com/reel/1109252104803509/" target="_blank" rel="noopener noreferrer" data-bilingual="Watch project|شاهد العمل">شاهد العمل</a></div>
+          </article>
+          <article class="project">
             <div class="video-frame vertical"><iframe title="Mini Runner Market AI commercial" src="https://www.facebook.com/plugins/video.php?height=476&amp;href=https%3A%2F%2Fwww.facebook.com%2Freel%2F1056300057368949%2F&amp;show_text=false&amp;width=267&amp;t=0" loading="lazy" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
             <div class="project-info"><p class="project-type">AI cinematic commercial</p><h3>Mini Runner Market Ad</h3><p>A playful parkour chase through a bustling market, created for social video.</p><a class="project-link" href="https://www.facebook.com/reel/1056300057368949/" target="_blank" rel="noopener noreferrer">Watch project <span aria-hidden="true">↗</span></a></div>
           </article>
@@ -335,6 +339,7 @@
     (() => {
       // Optional public Google Sheets CSV URL. Leave empty to show the current portfolio.
       const PORTFOLIO_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQncmHQmL924itXgb41_CunYe_o7PlnzJapiwjCI2um7EVI6KGlBLPULP0sf_HODSp1hyNNUfLQRjDF/pub?gid=0&single=true&output=csv";
+      const ANTEEL_FALLBACK = { visible: "yes", client_name: "مطعم العنتيل", title_en: "Al Anteel Restaurant Ad", title_ar: "إعلان مطعم العنتيل", category_en: "Real client project", category_ar: "عمل حقيقي لعميل", description_en: "A completed video project for Al Anteel Restaurant.", description_ar: "فيديو تم تنفيذه وتسليمه لمطعم العنتيل.", facebook_url: "https://www.facebook.com/reel/1109252104803509/", orientation: "vertical" };
       const grid = document.querySelector("#work .work-grid");
       if (!PORTFOLIO_CSV_URL || !grid) return;
 
@@ -365,7 +370,14 @@
 
       function showProjects(projects) {
         const lang = document.documentElement.lang === "ar" ? "ar" : "en";
-        const visible = projects.filter(item => /^(yes|true|1)$/i.test(item.visible) && item.title_en && safeFacebookUrl(item.facebook_url));
+        for (const item of projects) {
+          const videoUrl = safeFacebookUrl(item.facebook_url);
+          if (!videoUrl) continue;
+          const existing = [...grid.querySelectorAll(".project:not([data-sheet-project='true'])")]
+            .find(card => card.querySelector(".project-link")?.href === videoUrl);
+          if (existing) existing.hidden = !/^(yes|true|1)$/i.test(item.visible);
+        }
+        const visible = projects.filter(item => /^(yes|true|1)$/i.test(item.visible) && (item.title_en || item.title_ar) && safeFacebookUrl(item.facebook_url));
         if (!visible.length) return;
         grid.querySelectorAll("[data-sheet-project='true']").forEach(card => card.remove());
         for (const item of visible) {
@@ -374,7 +386,20 @@
           const existing = [...grid.querySelectorAll(".project:not([data-sheet-project='true'])")]
             .find(card => card.querySelector(".project-link")?.href === videoUrl);
           if (existing) {
+            existing.hidden = false;
             const info = existing.querySelector(".project-info");
+            const frame = existing.querySelector(".video-frame");
+            const iframe = existing.querySelector("iframe");
+            const type = info?.querySelector(".project-type");
+            const title = info?.querySelector("h3");
+            const description = info?.querySelectorAll("p")?.[1];
+            const sheetTitle = item["title_" + lang] || item.title_en || item.title_ar;
+            const sheetCategory = item["category_" + lang] || item.category_en || item.category_ar;
+            const sheetDescription = item["description_" + lang] || item.description_en || item.description_ar;
+            if (sheetTitle) { if (title) title.textContent = sheetTitle; if (iframe) iframe.title = sheetTitle; }
+            if (sheetCategory && type) type.textContent = sheetCategory;
+            if (sheetDescription && description) description.textContent = sheetDescription;
+            if (frame) frame.classList.toggle("vertical", (item.orientation || "").toLowerCase() === "vertical");
             info?.querySelector(".project-client-badge")?.remove();
             if (isClientProject && info) {
               const badge = document.createElement("span"); badge.className = "project-client-badge";
@@ -391,14 +416,14 @@
           const frame = document.createElement("div"); frame.className = "video-frame";
           if ((item.orientation || "").toLowerCase() === "vertical") frame.classList.add("vertical");
           const iframe = document.createElement("iframe");
-          iframe.title = item["title_" + lang] || item.title_en;
+          iframe.title = item["title_" + lang] || item.title_en || item.title_ar;
           iframe.src = "https://www.facebook.com/plugins/video.php?show_text=false&href=" + encodeURIComponent(videoUrl);
           iframe.loading = "lazy"; iframe.allowFullscreen = true;
           iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
           iframe.referrerPolicy = "strict-origin-when-cross-origin"; frame.append(iframe);
           const info = document.createElement("div"); info.className = "project-info";
           const type = document.createElement("p"); type.className = "project-type"; type.textContent = item["category_" + lang] || item.category_en || "";
-          const title = document.createElement("h3"); title.textContent = item["title_" + lang] || item.title_en;
+          const title = document.createElement("h3"); title.textContent = item["title_" + lang] || item.title_en || item.title_ar;
           const desc = document.createElement("p"); desc.textContent = item["description_" + lang] || item.description_en || (lang === "ar" ? "شاهد هذا الفيديو من أعمالنا." : "Watch this video from our portfolio.");
           if (isClientProject) { const badge = document.createElement("span"); badge.className = "project-client-badge"; badge.textContent = lang === "ar" ? "مشروع منفّذ لعميل" : "Produced for a client"; badge.textContent = item.client_name ? (lang === "ar" ? "\u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u0647 \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0644\u0639\u0645\u064a\u0644: " + item.client_name : "Completed and delivered for " + item.client_name) : (lang === "ar" ? "\u0639\u0645\u0644 \u062d\u0642\u064a\u0642\u064a \u062a\u0645 \u062a\u0646\u0641\u064a\u0630\u064ه \u0648\u062a\u0633\u0644\u064a\u0645\u064ه \u0644\u0639\u0645\u064a\u0644" : "Completed and delivered for a real client"); info.append(badge); }
           const clientBadge = info.querySelector(".project-client-badge");
@@ -417,12 +442,19 @@
         }
       }
 
+      showProjects([ANTEEL_FALLBACK]);
       fetch(PORTFOLIO_CSV_URL).then(response => { if (!response.ok) throw new Error("Sheet unavailable"); return response.text(); })
         .then(parseCSV).then(projects => {
-          showProjects(projects);
-          document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects(projects), 0));
-          document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects(projects), 0)));
-        }).catch(() => { /* Keep the existing project cards if the public sheet cannot be loaded. */ });
+          const hasAnteel = projects.some(item => /^(yes|true|1)$/i.test(item.visible) && (item.title_en || item.title_ar) && safeFacebookUrl(item.facebook_url).includes("1109252104803509"));
+          const displayProjects = hasAnteel ? projects : [...projects, ANTEEL_FALLBACK];
+          showProjects(displayProjects);
+          document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects(displayProjects), 0));
+          document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects(displayProjects), 0)));
+        }).catch(() => {
+          showProjects([ANTEEL_FALLBACK]);
+          document.getElementById("language-toggle")?.addEventListener("click", () => setTimeout(() => showProjects([ANTEEL_FALLBACK]), 0));
+          document.querySelectorAll("[data-language]").forEach(button => button.addEventListener("click", () => setTimeout(() => showProjects([ANTEEL_FALLBACK]), 0)));
+        });
 
       const durationSelect = document.getElementById("price-duration");
       const formatSelect = document.getElementById("price-format");
