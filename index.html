@@ -333,10 +333,10 @@
         const lang = document.documentElement.lang === "ar" ? "ar" : "en";
         const visible = projects.filter(item => /^(yes|true|1)$/i.test(item.visible) && item.title_en && safeFacebookUrl(item.facebook_url));
         if (!visible.length) return;
-        grid.replaceChildren();
+        grid.querySelectorAll("[data-sheet-project='true']").forEach(card => card.remove());
         for (const item of visible) {
           const videoUrl = safeFacebookUrl(item.facebook_url);
-          const card = document.createElement("article"); card.className = "project";
+          const card = document.createElement("article"); card.className = "project"; card.dataset.sheetProject = "true";
           const frame = document.createElement("div"); frame.className = "video-frame";
           if ((item.orientation || "").toLowerCase() === "vertical") frame.classList.add("vertical");
           const iframe = document.createElement("iframe");
@@ -348,7 +348,7 @@
           const info = document.createElement("div"); info.className = "project-info";
           const type = document.createElement("p"); type.className = "project-type"; type.textContent = item["category_" + lang] || item.category_en || "";
           const title = document.createElement("h3"); title.textContent = item["title_" + lang] || item.title_en;
-          const desc = document.createElement("p"); desc.textContent = item["description_" + lang] || item.description_en || "";
+          const desc = document.createElement("p"); desc.textContent = item["description_" + lang] || item.description_en || (lang === "ar" ? "شاهد هذا الفيديو من أعمالنا." : "Watch this video from our portfolio.");
           info.append(type, title, desc);
           if (item.client_name) { const client = document.createElement("p"); client.className = "project-type"; client.textContent = (lang === "ar" ? "العميل: " : "Client: ") + item.client_name; info.append(client); }
           const link = document.createElement("a"); link.className = "project-link"; link.href = videoUrl; link.target = "_blank"; link.rel = "noopener noreferrer";
