@@ -490,10 +490,31 @@
 
   /* =====================  VIDEO LINKS  ===================== */
   function parseVideo(value) {
+    let raw = String(value || "").trim();
+    // Accept Facebook's full embed code (<iframe ... src="...">): use its src.
+    const iframeSrc = raw.match(/<iframe[^>]*\ssrc=["']([^"']+)["']/i);
+    if (iframeSrc) raw = iframeSrc[1].replace(/&amp;/g, "&");
     let u;
-    try { u = new URL(String(value || "").trim()); } catch (_) { return null; }
+    try { u = new URL(raw); } catch (_) { return null; }
     if (u.protocol !== "https:") return null;
     const host = u.hostname.toLowerCase().replace(/^(www|m|web)\./, "");
+
+    // Facebook's own embed link (the "Embed" option): .../plugins/video.php?...&href=<video link>
+    if (host === "facebook.com" && /^\/plugins\/video\.php/.test(u.pathname)) {
+      let target;
+      try { target = new URL(u.searchParams.get("href") || ""); } catch (_) { return null; }
+      if (target.protocol !== "https:") return null;
+      const m = target.pathname.match(/\/(?:reel|videos?)\/(\d+)/);
+      const id = m ? m[1] : target.searchParams.get("v");
+      const preview = new URL(u.href); preview.searchParams.delete("autoplay");
+      const embed = new URL(u.href); embed.searchParams.set("autoplay", "true");
+      return {
+        key: id ? "fb:" + id : "fb:" + target.origin + target.pathname,
+        url: target.href,
+        embed: embed.href,
+        preview: preview.href
+      };
+    }
 
     if (host === "facebook.com" || host === "fb.watch") {
       const m = u.pathname.match(/\/(?:reel|videos?)\/(\d+)/);
@@ -611,7 +632,7 @@
   }
 
   /* Sheet columns: visible, title_en, title_ar, category_en, category_ar, description_en, description_ar,
-     facebook_url (or video_url), orientation, client_name, real_client, thumbnail_url, embed ("no" = open on Facebook instead of playing here) */
+     facebook_url (reel link, Facebook embed code/link, or YouTube link), orientation, client_name, real_client, thumbnail_url, embed ("no" = open on Facebook instead of playing here) */
   function mergeSheet(rows) {
     const list = DEFAULTS.map(p => Object.assign({}, p));
     rows.forEach((row, index) => {
