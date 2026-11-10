@@ -23,18 +23,18 @@
   </script>
   <title>Aivengers AI — Cinematic video studio</title>
   <meta name="description" content="Aivengers AI creates cinematic AI videos, real video productions, and social-first commercials for brands and businesses.">
-  <link rel="canonical" href="https://mohamedalisoba3-star.github.io/aivengers-ai/">
+  <link rel="canonical" href="https://aivengers-ai.pages.dev/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%2351a8ff%22/%3E%3Cstop%20offset%3D%22.6%22%20stop-color%3D%22%239a76ff%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23ff647c%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2216%22%20fill%3D%22url%28%23g%29%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20font-family%3D%22Arial%2Csans-serif%22%20font-size%3D%2236%22%20font-weight%3D%22800%22%20text-anchor%3D%22middle%22%20fill%3D%22%2307101b%22%3EA%3C/text%3E%3C/svg%3E">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Aivengers AI">
-  <meta property="og:url" content="https://mohamedalisoba3-star.github.io/aivengers-ai/">
+  <meta property="og:url" content="https://aivengers-ai.pages.dev/">
   <meta property="og:title" content="Aivengers AI — Cinematic video studio">
   <meta property="og:description" content="Cinematic AI and real video production for brands, creators, and businesses.">
-  <meta property="og:image" content="https://mohamedalisoba3-star.github.io/aivengers-ai/og-image.png">
+  <meta property="og:image" content="https://aivengers-ai.pages.dev/og-image.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://mohamedalisoba3-star.github.io/aivengers-ai/og-image.png">
+  <meta name="twitter:image" content="https://aivengers-ai.pages.dev/og-image.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400..900&family=Inter:wght@400..900&display=swap">
@@ -44,7 +44,7 @@
     "@type": "Organization",
     "name": "Aivengers AI",
     "description": "Creative video production studio: cinematic AI videos, real video production, and social-first commercials.",
-    "url": "https://mohamedalisoba3-star.github.io/aivengers-ai/",
+    "url": "https://aivengers-ai.pages.dev/",
     "sameAs": [
       "https://www.facebook.com/share/1Ad38VRw7m/",
       "https://www.instagram.com/aivengers.ai",
@@ -314,6 +314,9 @@
     @media (max-width: 650px) { section { padding: 46px 0; } .hero { padding: 34px 0 28px; } h1 { font-size: clamp(34px,10vw,48px); } .pricing { padding-top: 30px; } }
     .fields-group { display: contents; }
     .fields-group[hidden] { display: none; }
+    /* horizontal videos: frame matches the video so Facebook's player has no empty white area */
+    .work-grid { align-items: flex-start; }
+    .work-grid .video-frame:not(.vertical) { aspect-ratio: 16 / 9; }
   </style>
 </head>
 <body>
