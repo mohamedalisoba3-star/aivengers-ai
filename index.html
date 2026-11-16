@@ -251,7 +251,7 @@
     /* ---- added in the fix pass ---- */
     button:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
     .nav-links .menu-cta { display: none; }
-    .video-facade { position: relative; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; color: #fff; font: inherit; text-align: center; overflow: hidden;
+    .video-facade { position: relative; display: grid; place-items: center; width: 100%; height: 100%; padding: 0; border: 0; cursor: pointer; color: #fff; overflow: hidden;
       background: radial-gradient(ellipse at 20% 15%,rgba(72,157,255,.34),transparent 55%),radial-gradient(ellipse at 85% 90%,rgba(255,91,125,.26),transparent 50%),linear-gradient(150deg,#161b2b,#0a0c14); }
     .video-facade img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
     .video-facade::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(3,5,10,.05),rgba(3,5,10,.55)); }
@@ -314,22 +314,9 @@
     @media (max-width: 650px) { section { padding: 46px 0; } .hero { padding: 34px 0 28px; } h1 { font-size: clamp(34px,10vw,48px); } .pricing { padding-top: 30px; } }
     .fields-group { display: contents; }
     .fields-group[hidden] { display: none; }
-    /* Portfolio media: preserve each video's orientation without layout jumps. */
-    .work-grid { align-items: start; }
-    .work-grid .video-frame { aspect-ratio: 16 / 9; }
-    .work-grid .video-frame.vertical { aspect-ratio: 9 / 16; }
-    @media (min-width: 651px) {
-      .work-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; }
-      .work-grid .project { flex: initial; }
-    }
-    @media (min-width: 651px) and (max-width: 900px) {
-      .work-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 650px) {
-      .work-grid { display: flex; overflow-x: auto; }
-      .work-grid .video-frame:not(.vertical) { aspect-ratio: 16 / 9; }
-      .work-grid .video-frame.vertical { aspect-ratio: 9 / 16; max-height: 78vh; }
-    }
+    /* horizontal videos: frame matches the video so Facebook's player has no empty white area */
+    .work-grid { align-items: flex-start; }
+    .work-grid .video-frame:not(.vertical) { aspect-ratio: 16 / 9; }
   </style>
 </head>
 <body>
@@ -566,19 +553,15 @@
     if (u.protocol !== "https:") return null;
     const host = u.hostname.toLowerCase().replace(/^(www|m|web)\./, "");
 
-    // Facebook's own embed links: /plugins/video.php and /plugins/post.php.
-    // A post embed may contain a video, but it is not always eligible for the
-    // video plugin; preserve its real target and let the Sheet's embed flag decide.
-    if (host === "facebook.com" && /^\/plugins\/(?:video|post)\.php/.test(u.pathname)) {
+    // Facebook's own embed link (the "Embed" option): .../plugins/video.php?...&href=<video link>
+    if (host === "facebook.com" && /^\/plugins\/video\.php/.test(u.pathname)) {
       let target;
       try { target = new URL(u.searchParams.get("href") || ""); } catch (_) { return null; }
       if (target.protocol !== "https:") return null;
       const m = target.pathname.match(/\/(?:reel|videos?)\/(\d+)/);
       const id = m ? m[1] : target.searchParams.get("v");
-      const isPost = /\/plugins\/post\.php/.test(u.pathname);
       const preview = new URL(u.href); preview.searchParams.delete("autoplay");
-      const embed = new URL(u.href);
-      if (!isPost) embed.searchParams.set("autoplay", "true");
+      const embed = new URL(u.href); embed.searchParams.set("autoplay", "true");
       return {
         key: id ? "fb:" + id : "fb:" + target.origin + target.pathname,
         url: target.href,
@@ -703,7 +686,7 @@
   }
 
   /* Sheet columns: visible, title_en, title_ar, category_en, category_ar, description_en, description_ar,
-     facebook_url (reel link, Facebook embed code/link, or YouTube link), orientation, client_name, real_client, thumbnail_url, embed ("no" = open externally instead of embedding) */
+     facebook_url (reel link, Facebook embed code/link, or YouTube link), orientation, client_name, real_client, thumbnail_url, embed ("no" = open on Facebook instead of playing here) */
   function mergeSheet(rows) {
     const list = DEFAULTS.map(p => Object.assign({}, p));
     rows.forEach((row, index) => {
@@ -776,14 +759,8 @@
 
     /* linkOnly: for videos Facebook refuses to embed (copyright/music claims). The card opens the video on Facebook instead. */
     const button = document.createElement(p.linkOnly ? "a" : "button");
-    if (p.linkOnly) {
-      button.href = p.url;
-      button.target = "_blank";
-      button.rel = "noopener noreferrer";
-      button.setAttribute("aria-label", (lang === "ar" ? "فتح الفيديو على فيسبوك: " : "Open video on Facebook: ") + (p.title[lang] || ""));
-    } else {
-      button.type = "button";
-    }
+    if (p.linkOnly) { button.href = p.url; button.target = "_blank"; button.rel = "noopener noreferrer"; }
+    else button.type = "button";
     button.className = "video-facade";
     if (p.thumb) {
       const img = new Image();
@@ -816,21 +793,29 @@
     link.append(t("span", "", { en: "Watch project", ar: "شاهد العمل" }), " ", arrow);
     info.append(link);
 
-    /* The heavy player is loaded only after an explicit activation. */
+    /* The heavy video player is only loaded when the visitor taps play. */
     if (!p.linkOnly) button.addEventListener("click", () => {
       const iframe = document.createElement("iframe");
       iframe.src = p.embed;
       iframe.title = heading.textContent;
-      iframe.loading = "eager";
       iframe.allowFullscreen = true;
       iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
       iframe.referrerPolicy = "strict-origin-when-cross-origin";
       frame.replaceChildren(iframe);
     });
 
-    /* Keep all cards consistent: do not load Facebook iframes before the visitor asks.
-       Facebook may refuse embeds for private, age-restricted, or rights-limited videos;
-       the external link below remains available in every card as the reliable fallback. */
+    /* No cover image supplied: use Facebook's own player, which shows the video's cover.
+       loading="lazy" means it only loads when the visitor scrolls close to it. */
+    if (!p.thumb && p.preview && !p.linkOnly) {
+      const preview = document.createElement("iframe");
+      preview.src = p.preview;
+      preview.title = heading.textContent;
+      preview.loading = "lazy";
+      preview.allowFullscreen = true;
+      preview.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
+      preview.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.replaceChildren(preview);
+    }
 
     card.append(frame, info);
     return card;
