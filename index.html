@@ -818,6 +818,15 @@
   playHint.className = "video-play-hint";
   playHint.hidden = true;
   modalFrame.append(playHint);
+  // Mobile Facebook uses a native video surface without SDK playback events.
+  // Keep the tap native, and remove its visual cue when that iframe gets focus.
+  window.setInterval(() => {
+    if (modal.hidden || playHint.hidden) return;
+    const active = document.activeElement;
+    if (active && active.tagName === "IFRAME" && modalPlayer.contains(active)) {
+      playHint.hidden = true;
+    }
+  }, 150);
   function openVideoModal(p, title) {
     modalPlayer.replaceChildren();
     modalFrame.classList.toggle("horizontal", !p.vertical);
