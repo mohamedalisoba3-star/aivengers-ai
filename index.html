@@ -819,7 +819,7 @@
       holder.id = "preview-fb-player-" + token;
       holder.className = "fb-video";
       holder.dataset.href = p.url;
-      holder.dataset.width = String(Math.round(Math.min(540, window.innerWidth - 32, (window.innerHeight * 0.84) * 9 / 16)));
+      holder.dataset.width = String(Math.round(p.vertical ? Math.min(540, window.innerWidth - 32, (window.innerHeight * 0.84) * 9 / 16) : Math.min(900, window.innerWidth - 32, (window.innerHeight * 0.84) * 16 / 9)));
       holder.dataset.autoplay = "false";
       holder.dataset.allowfullscreen = "true";
       holder.dataset.showText = "false";
