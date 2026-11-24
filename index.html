@@ -370,6 +370,17 @@ body.gold .project{transition:transform .25s ease}
 body.gold .project:active{transform:translateY(-2px)}
 @media(max-width:760px){body.gold .hero::before{animation-duration:22s;opacity:.6}body.gold .concept-collage{translate:none}}
 @media(prefers-reduced-motion:reduce){body.gold *,body.gold *::before{animation:none!important;transition:none!important;scroll-behavior:auto!important}body.gold .concept-collage{translate:none!important}}
+</style><style>
+body.gold .hero-play{position:absolute;top:178px;left:50%;transform:translate(-50%,-50%);color:#fff;pointer-events:none;background:#171714a6;border:1px solid #f5e7c280;backdrop-filter:none}
+body.gold .concept-title span{color:#ff9872;text-shadow:0 0 3px #ff6b4240,0 0 12px #fa6d437d,0 0 26px #ec583e52}
+body.gold .project-client-badge{color:#ffe8ae;text-shadow:0 0 3px #ffd16ab3,0 0 9px #eeb847a6,0 0 17px #eeb84766;background:#2b2519;box-shadow:0 0 9px #d7ac3c25}
+body.gold .hero::before{display:none}
+body.gold .hero::after{display:block;content:"";position:absolute;inset:auto 0 0;height:1px;background:#b8904380;pointer-events:none}
+body.gold .gold-runner{position:absolute;bottom:0;left:0;width:28%;height:2px;background:linear-gradient(90deg,transparent,#f4d47e 35%,#fff2b7 80%,transparent);box-shadow:0 0 7px #e6b94a9c;animation:gold-travel 4.5s linear infinite;pointer-events:none}
+body.gold .concept-ribbon{position:relative;overflow:hidden}
+@keyframes gold-travel{from{transform:translateX(-100%)}to{transform:translateX(460%)}}
+@media(max-width:760px){body.gold .hero-play{top:126px;width:60px;height:60px}body.gold .gold-runner{height:2px;width:40%;animation-duration:3.4s}@keyframes gold-travel{from{transform:translateX(-100%)}to{transform:translateX(350%)}}}
+@media(prefers-reduced-motion:reduce){body.gold .gold-runner{animation:none!important;left:30%;transform:none}}
 </style></head>
 <body><div class="concept-preview">تصميم تجريبي فقط / الموقع الحالي لم يتغير <a href="?concept=warm">١. كواليس الإعلان</a><a href="?concept=poster">٢. براندك بطل</a><a href="?concept=gold">٣. رخام ودهبي</a></div><script>if(['gold'].includes(new URLSearchParams(location.search).get('concept')))document.body.classList.add('dark',new URLSearchParams(location.search).get('concept'));if(new URLSearchParams(location.search).get('concept')==='poster')document.body.classList.add('poster');</script>
 <div class="ambient-scene" aria-hidden="true">
@@ -1198,5 +1209,5 @@ body.gold .project:active{transform:translateY(-2px)}
 <script>
 (()=>{const poster=document.body.classList.contains('poster');if(poster){document.querySelector('.concept-title').innerHTML='براندك<br><span>بطل اللقطة.</span>';document.querySelector('.concept-stamp').innerHTML='إعلانك الجاي<br>هيبقى مختلف.';}
 function sync(){const cards=[...document.querySelectorAll('#work-grid .video-facade')];document.querySelectorAll('.concept-shot').forEach(b=>{let n=+b.dataset.card;const img=cards[n]?.querySelector('img');if(img)b.querySelector('img').src=img.src;b.onclick=()=>cards[n]?.click();});}new MutationObserver(sync).observe(document.getElementById('work-grid'),{childList:true});sync();})();
-</script><script>(()=>{if(!document.body.classList.contains('gold')||matchMedia('(prefers-reduced-motion:reduce)').matches||innerWidth<761)return;const collage=document.querySelector('.concept-collage');let pending=false;addEventListener('scroll',()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{collage.style.setProperty('--drift',Math.min(scrollY*.035,20)+'px');pending=false;});},{passive:true});})();</script></body>
+</script><script>(()=>{if(!document.body.classList.contains('gold')||matchMedia('(prefers-reduced-motion:reduce)').matches||innerWidth<761)return;const collage=document.querySelector('.concept-collage');let pending=false;addEventListener('scroll',()=>{if(pending)return;pending=true;requestAnimationFrame(()=>{collage.style.setProperty('--drift',Math.min(scrollY*.035,20)+'px');pending=false;});},{passive:true});})();</script><script>(()=>{if(!document.body.classList.contains('gold'))return;document.querySelectorAll('.concept-shot').forEach(b=>{const p=document.createElement('i');p.className='play-icon hero-play';p.setAttribute('aria-hidden','true');p.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';b.append(p);});document.querySelectorAll('.hero,.concept-ribbon').forEach(e=>{const line=document.createElement('i');line.className='gold-runner';line.setAttribute('aria-hidden','true');e.append(line);});})();</script></body>
           </html>
