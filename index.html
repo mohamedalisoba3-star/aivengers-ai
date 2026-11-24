@@ -818,7 +818,7 @@
       holder.id = "preview-fb-player-" + token;
       holder.className = "fb-video";
       holder.dataset.href = p.url;
-      holder.dataset.width = String(Math.round(modalFrame.getBoundingClientRect().width) || 336);
+      holder.dataset.width = String(Math.min(540, window.innerWidth - 32, (window.innerHeight * 0.84) * 9 / 16));
       holder.dataset.autoplay = "false";
       holder.dataset.allowfullscreen = "true";
       holder.dataset.showText = "false";
@@ -833,10 +833,10 @@
           fbPlayer.unmute();
           fbPlayer.setVolume(1);
           fbPlayer.play();
-          soundButton.hidden = false;
+          soundButton.hidden = true;
           fbPlayer.subscribe("startedPlaying", () => {
             window.__previewPlayerStatus = {muted:fbPlayer.isMuted(),volume:fbPlayer.getVolume(),playing:true};
-            soundButton.hidden = !fbPlayer.isMuted();
+            soundButton.hidden = true;
           });
           window.__previewPlayer = fbPlayer;
         };
