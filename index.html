@@ -810,7 +810,7 @@
   const playHint = document.createElement("div");
   playHint.setAttribute("aria-hidden", "true");
   playHint.style.cssText = "position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:white;text-align:center;text-shadow:0 2px 6px #000";
-  playHint.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;width:84px;height:84px;border:2px solid rgba(255,255,255,.95);border-radius:50%;background:rgba(0,0,0,.55);box-shadow:0 4px 30px rgba(0,0,0,.4);font:38px Arial;padding-left:6px">&#9654;</span><span style="font:700 16px Arial;background:rgba(0,0,0,.65);padding:8px 13px;border-radius:20px">اضغط للتشغيل بالصوت</span>';
+  playHint.innerHTML = '<span style="display:flex;align-items:center;justify-content:center;width:84px;height:84px;border:2px solid rgba(255,255,255,.95);border-radius:50%;background:rgba(0,0,0,.55);box-shadow:0 4px 30px rgba(0,0,0,.4);font:38px Arial;padding-left:6px">&#9654;</span>';
   // Hidden attribute must override the overlay's inline flex display.
   const hintStyle = document.createElement("style");
   hintStyle.textContent = ".video-play-hint[hidden]{display:none!important}";
@@ -853,7 +853,6 @@
           FB.Event.unsubscribe("xfbml.ready", onReady);
           if (token !== activePlayerToken || modal.hidden) return;
           fbPlayer = msg.instance;
-          playHint.lastElementChild.textContent = lang === "ar" ? "اضغط للتشغيل بالصوت" : "Tap to play with sound";
           playHint.hidden = false;
           fbPlayer.unmute();
           fbPlayer.setVolume(1);
