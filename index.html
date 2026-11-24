@@ -774,23 +774,88 @@
   function closeVideoModal() {
     modal.hidden = true;
     document.body.style.overflow = "";
+    activePlayerToken++;
+    if (fbPlayer) {try {fbPlayer.pause();} catch (_) {}}
+    fbPlayer=null;
+    soundButton.hidden=true;
     modalPlayer.replaceChildren();
   }
+  let fbPlayer = null;
+  let activePlayerToken = 0;
+  let sdkPromise;
+  function loadPlayerSdk() {
+    if (!sdkPromise) sdkPromise = new Promise((resolve, reject) => {
+      if (window.FB) return resolve(window.FB);
+      window.fbAsyncInit = function() {
+        FB.init({xfbml:false, version:"v3.2"});
+        resolve(FB);
+      };
+      const script = document.createElement("script");
+      script.src = "https://connect.facebook.net/en_US/sdk.js";
+      script.onerror = reject;
+      document.body.append(script);
+    });
+    return sdkPromise;
+  }
+  const soundButton = document.createElement("button");
+  soundButton.type = "button";
+  soundButton.textContent = "تشغيل بالصوت / Play with sound";
+  soundButton.style.cssText = "position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:20;padding:10px 14px;border:0;border-radius:20px;background:#aed8ff;color:#08101c;white-space:nowrap;cursor:pointer";
+  soundButton.hidden = true;
+  modalFrame.append(soundButton);
+  soundButton.addEventListener("click", () => {
+    if (fbPlayer) {fbPlayer.unmute(); fbPlayer.setVolume(1); fbPlayer.play();}
+  });
   function openVideoModal(p, title) {
     modalPlayer.replaceChildren();
     modalFrame.classList.toggle("horizontal", !p.vertical);
-    const iframe = document.createElement("iframe");
-    iframe.src = p.embed;
-    iframe.title = title;
-    iframe.allowFullscreen = true;
-    iframe.allow = "autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share";
-    iframe.referrerPolicy = "strict-origin-when-cross-origin";
-    modalPlayer.append(iframe);
+    fbPlayer = null;
+    soundButton.hidden = true;
+    modalPlayer.style.direction = "ltr";
+    modalFrame.style.direction = "ltr";
+    const token = ++activePlayerToken;
+    if (p.key.startsWith("fb:")) {
+      const holder = document.createElement("div");
+      holder.id = "preview-fb-player-" + token;
+      holder.className = "fb-video";
+      holder.dataset.href = p.url;
+      holder.dataset.width = String(Math.round(Math.min(540, window.innerWidth - 32, (window.innerHeight * 0.84) * 9 / 16)));
+      holder.dataset.autoplay = "false";
+      holder.dataset.allowfullscreen = "true";
+      holder.dataset.showText = "false";
+      modalPlayer.append(holder);
+      loadPlayerSdk().then(FB => {
+        if (token !== activePlayerToken || modal.hidden) return;
+        const onReady = msg => {
+          if (msg.type !== "video" || msg.id !== holder.id) return;
+          FB.Event.unsubscribe("xfbml.ready", onReady);
+          if (token !== activePlayerToken || modal.hidden) return;
+          fbPlayer = msg.instance;
+          fbPlayer.unmute();
+          fbPlayer.setVolume(1);
+          fbPlayer.play();
+          soundButton.hidden = true;
+          fbPlayer.subscribe("startedPlaying", () => {
+            window.__previewPlayerStatus = {muted:fbPlayer.isMuted(),volume:fbPlayer.getVolume(),playing:true};
+            soundButton.hidden = true;
+          });
+          window.__previewPlayer = fbPlayer;
+        };
+        FB.Event.subscribe("xfbml.ready", onReady);
+        FB.XFBML.parse(modalPlayer);
+      }).catch(() => {soundButton.hidden=false;soundButton.textContent="تعذر تحميل المشغل. افتح الفيديو من شاهد العمل";});
+    } else {
+      const iframe = document.createElement("iframe");
+      iframe.src = p.embed; iframe.title=title; iframe.allowFullscreen=true;
+      iframe.allow="autoplay; encrypted-media; picture-in-picture";
+      modalPlayer.append(iframe);
+    }
     modalClose.setAttribute("aria-label", lang === "ar" ? "إغلاق الفيديو" : "Close video");
     modal.hidden = false;
     document.body.style.overflow = "hidden";
     modalClose.focus();
   }
+  loadPlayerSdk().catch(() => {});
   modalClose.addEventListener("click", closeVideoModal);
   modal.addEventListener("click", event => { if (event.target === modal) closeVideoModal(); });
   document.addEventListener("keydown", event => { if (event.key === "Escape" && !modal.hidden) closeVideoModal(); });
@@ -884,7 +949,9 @@
   }
 
   function render(list) {
-    const visible = list.filter(p => !p.hidden).sort((a, b) => (a.linkOnly ? 1 : 0) - (b.linkOnly ? 1 : 0));
+    const approvedOrder = ["fb:2646689495806646", "fb:1478483230826323", "fb:1478140680915291", "fb:2118001358852939", "fb:1142814704801169", "fb:1109252104803509", "fb:1056300057368949", "fb:27655261734151071", "fb:1081454844385721", "fb:3674169399412917", "fb:1363147695804228", "fb:1092377130158840"];
+    const rank = key => { const i = approvedOrder.indexOf(key); return i < 0 ? approvedOrder.length : i; };
+    const visible = list.filter(p => !p.hidden).sort((a, b) => rank(a.key) - rank(b.key));
     const next = JSON.stringify(visible);
     if (next === signature) return; // nothing changed: don't reset a video that is already playing
     signature = next;
@@ -1073,4 +1140,4 @@
   </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "049ec16d376f461498cea5d11fc33933"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
-</html>
+  </html>
