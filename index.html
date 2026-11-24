@@ -381,7 +381,7 @@ body.gold .concept-ribbon{position:relative;overflow:hidden}
 @keyframes gold-travel{from{transform:translateX(-100%)}to{transform:translateX(460%)}}
 @media(max-width:760px){body.gold .hero-play{top:126px;width:60px;height:60px}body.gold .gold-runner{height:2px;width:40%;animation-duration:3.4s}@keyframes gold-travel{from{transform:translateX(-100%)}to{transform:translateX(350%)}}}
 @media(prefers-reduced-motion:reduce){body.gold .gold-runner{animation:none!important;left:30%;transform:none}}
-</style></head>
+</style><style>body.gold .project-client-badge{display:inline-block}body.gold .client-name{color:#ff9872;text-shadow:0 0 5px #f47a5260;font-weight:850;margin-inline-start:.3em}</style></head>
 <body><div class="concept-preview">تصميم تجريبي فقط / الموقع الحالي لم يتغير <a href="?concept=warm">١. كواليس الإعلان</a><a href="?concept=poster">٢. براندك بطل</a><a href="?concept=gold">٣. رخام ودهبي</a></div><script>if(['gold'].includes(new URLSearchParams(location.search).get('concept')))document.body.classList.add('dark',new URLSearchParams(location.search).get('concept'));if(new URLSearchParams(location.search).get('concept')==='poster')document.body.classList.add('poster');</script>
 <div class="ambient-scene" aria-hidden="true">
     <svg class="studio-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
@@ -949,12 +949,15 @@ body.gold .concept-ribbon{position:relative;overflow:hidden}
     play.className = "play-icon";
     play.setAttribute("aria-hidden", "true");
     play.innerHTML = '<svg viewBox="0 0 24 24" width="26" height="26"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
-    button.append(play, t("span", "video-hint", p.linkOnly ? { en: "Watch on Facebook", ar: "شاهد على فيسبوك" } : { en: "Tap to play", ar: "اضغط للتشغيل" }));
+    button.append(play); if(!document.body.classList.contains("gold")) button.append(t("span", "video-hint", p.linkOnly ? { en: "Watch on Facebook", ar: "شاهد على فيسبوك" } : { en: "Tap to play", ar: "اضغط للتشغيل" }));
     frame.append(button);
 
     const info = document.createElement("div");
     info.className = "project-info";
-    if (p.client || p.realClient) info.append(t("span", "project-client-badge", badgeTexts(p)));
+    if (p.client && document.body.classList.contains("gold")) {
+      const badge=document.createElement("span");badge.className="project-client-badge";
+      badge.append(t("span","client-label-text",{en:"One of our latest projects for ",ar:"من أحدث أعمالنا للعميل: "}),t("strong","client-name",p.client));info.append(badge);
+    } else if (p.client || p.realClient) info.append(t("span", "project-client-badge", badgeTexts(p)));
     if (p.type.en || p.type.ar) info.append(t("p", "project-type", p.type));
     const heading = t("h3", "", p.title);
     info.append(heading, t("p", "project-desc", p.desc));
