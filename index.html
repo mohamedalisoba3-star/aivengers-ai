@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
-<head>
+<head><base href="https://aivengers-ai.pages.dev/">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -462,7 +462,7 @@ body.gold .concept-ribbon{position:relative;overflow:hidden}
   <main id="top">
     <section class="hero"><div class="wrap concept-hero">
 <div class="concept-copy"><p class="concept-overline">AIVENGERS AI / استوديو إعلان مصري</p><h1 class="concept-title">شغلك حلو.<br><span>خلّي الناس تشوفه.</span></h1><p class="hero-lede">من أول لقطة للحلوى، لحد حكاية مطعمك.<br>إعلانات بالذكاء الاصطناعي وتصوير حقيقي،<br>بفكرة معمولة مخصوص لمشروعك.</p><div class="hero-actions"><a href="#work" class="button button-primary">اتفرّج على شغلنا ↙</a><a href="#pricing" class="button button-quiet">احسب سعر إعلانك</a></div><ul class="client-strip" id="client-strip" hidden></ul><p class="concept-footnote">مطاعم · حلويات · منتجات · حكايات براندات</p></div>
-<div class="concept-collage"><button class="concept-shot shot-one" data-card="0"><img alt="إعلان Candy Land"><span>01 / CANDY LAND <b>▶</b></span></button><button class="concept-shot shot-two" data-card="1"><img alt="إعلان Joy Bites"><span>02 / JOY BITES <b>▶</b></span></button><div class="concept-stamp">مش مجرد صورة.<br>دي أول لقطة.</div></div>
+<div class="concept-collage"><button class="concept-shot shot-one" data-card="0"><img alt="إعلان Candy Land"><span>01 / CANDY LAND <b>▶</b></span></button><button class="concept-shot shot-two" data-card="1"><img alt="إعلان زيوت نباتية"><span>02 / AL NEEL <b>▶</b></span></button><div class="concept-stamp">مش مجرد صورة.<br>دي أول لقطة.</div></div>
 </div></section>
 <div class="concept-ribbon">فكرة من عندنا. حكاية عنك. <span>✳</span> إعلان يستاهل يتشاف. <span>✳</span> AIVENGERS AI</div>
     <section id="work">
@@ -663,6 +663,11 @@ body.gold .concept-ribbon{position:relative;overflow:hidden}
   /* =====================  BUILT-IN PROJECTS  ===================== */
   const reel = id => "https://www.facebook.com/reel/" + id + "/";
   const RAW_DEFAULTS = [
+    { url: "https://www.facebook.com/reel/27127902863573423/", vertical: true,
+      type: pair("AI commercial", "إعلان بالذكاء الاصطناعي"),
+      client: pair("مؤسسة النيل للزيوت النباتية", "مؤسسة النيل للزيوت النباتية"),
+      title: pair("Vegetable Oil Ad", "إعلان زيوت نباتية"),
+      desc: pair("A video ad made for a vegetable oils brand.", "إعلان فيديو تم تنفيذه لعلامة زيوت نباتية.") },
     { url: reel("1081454844385721"), vertical: true,
       type: pair("AI product commercial", "إعلان منتج بالذكاء الاصطناعي"),
       title: pair("Cinematic Chocolate Product Ad", "إعلان شوكولاتة سينمائي"),
@@ -1019,7 +1024,7 @@ body.gold .concept-ribbon{position:relative;overflow:hidden}
   }
 
   function render(list) {
-    const approvedOrder = ["fb:2646689495806646", "fb:1478483230826323", "fb:1478140680915291", "fb:2118001358852939", "fb:1142814704801169", "fb:1109252104803509", "fb:1056300057368949", "fb:27655261734151071", "fb:1081454844385721", "fb:3674169399412917", "fb:1363147695804228", "fb:1092377130158840"];
+    const approvedOrder = ["fb:2646689495806646", "fb:27127902863573423", "fb:1478483230826323", "fb:1478140680915291", "fb:2118001358852939", "fb:1142814704801169", "fb:1109252104803509", "fb:1056300057368949", "fb:27655261734151071", "fb:1081454844385721", "fb:3674169399412917", "fb:1363147695804228", "fb:1092377130158840"];
     const rank = key => { const i = approvedOrder.indexOf(key); return i < 0 ? approvedOrder.length : i; };
     const visible = list.filter(p => !p.hidden).sort((a, b) => rank(a.key) - rank(b.key));
     const next = JSON.stringify(visible);
